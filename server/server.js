@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const expressJWT = require('express-jwt');
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const loginRouter = require("./routes/login");
