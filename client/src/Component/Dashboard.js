@@ -3,7 +3,10 @@ import React from 'react'
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 import Application from './Application';
+<<<<<<< HEAD
 import AddApplication from './AddApplication';
+=======
+>>>>>>> 114cc46556c697b1e7d84d8b43397aa2fb2d7ba7
 
 export default function Dashboard(props) {
 
