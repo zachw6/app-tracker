@@ -38,6 +38,7 @@ header {
 
 .dashboard h1.title {
   color: white;
+  font-size: 3vh;
   margin: 5px 2vw;
 }
 
@@ -53,4 +54,60 @@ header {
 
 .dashboard h1 {
   color: black;
+}
+
+button.btn_addApplication {
+  height: 50px;
+  width: 50px;
+  margin-left: 20px;
+  border-radius: 0px;
+  border: none;
+  font-size: 24px;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button.btn_addApplication:hover,
+button.btn_addApplication:focus {
+  background-color: #dddddd;
+}
+
+.applicationContainer {
+  background-color: #008cff;
+  width: 800px;
+  margin-top: 30px;
+}
+
+.applicationHeader {
+  width: 800px;
+  padding: 15px 15px;
+  margin-left: 10px;
+  font-size: 24px;
+}
+
+.applicationBody {
+  background-color: #f0f0f0;
+  padding: 15px 15px 15px 25px;
+  color: #101010;
+}
+
+.applicationFooter {
+  border: none;
+  background-color: rgba(0,0,0,0);
+  width: 100%;
+  color: white;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.applicationFooter:active, 
+.applicationFooter:hover {
+  border: none;
+  outline: none;
+  background-color: rgba(0,0,0,0.2);
+  width: 100%;
+  color: white;
+  cursor: pointer;
 }

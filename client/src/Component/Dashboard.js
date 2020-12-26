@@ -2,12 +2,15 @@ import '../css/dashboard.css';
 import React from 'react'
 import {useState, useEffect} from 'react';
 import axios from 'axios';
+import Application from './Application';
 
 export default function Dashboard(props) {
 
     const [applicationLoaded, setApplicationLoaded] = useState(false);
     const [applications, setApplications] = useState([]);
+
     const getApplications = () => {
+        setApplications([]);
         axios({
           method: "POST",
           url: "http://localhost:5000/user/applications",
@@ -20,9 +23,8 @@ export default function Dashboard(props) {
       });
       }
 
-      useEffect(() => {
-        getApplications();
-    }, []);
+      // eslint-disable-next-line
+      useEffect(getApplications, []);
 
     return (
         <div className="dashboard">
@@ -32,10 +34,10 @@ export default function Dashboard(props) {
             </header>
                 <div className="dashboardFilter"><h1>Filter: </h1></div>
                 <div className="dashboardApplications">
-                    <h1>Your Applications ({applications.length})</h1>
+                    <h1 style={{display: 'inline-block'}}>Applications ({applications.length})</h1><button className="btn_addApplication" style={{display:'inline-block'}}>+</button>
                     {applicationLoaded ? applications.map((application) => {
-                        return <h1 style={{color: 'black'}}>{application}</h1>
-                    }) : <p style={{color: 'black'}}>false</p>}
+                        return <Application companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted}/>
+                    }) : <p style={{color: 'black'}}>Not logged in.</p>}
                 </div>
             </div>
         </div>

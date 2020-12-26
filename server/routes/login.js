@@ -31,7 +31,7 @@ const googlelogin = (req, res) => {
                         })
                     } else {
                         // User needs to be created in the database.
-                        let password = bcrypt.genSalt(10).then(salt => {return bcrypt.hash(email+name+"!!#", salt)}).then(hash => {
+                        let password = bcrypt.genSalt(saltRounds).then(salt => {return bcrypt.hash(email+name+"!!#", salt)}).then(hash => {
                             let newUser = new User({
                                 _id: new mongoose.Types.ObjectId(),
                                 name: name,
