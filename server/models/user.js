@@ -5,6 +5,10 @@ const userSchema = new mongoose.Schema({
     type: mongoose.ObjectId,
     required: true,
   },
+  name: {
+    type: String,
+    required: true,
+  },
   username: {
     type: String,
     required: true,

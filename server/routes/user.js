@@ -7,16 +7,33 @@ const router = express.Router();
 const User = require("../models/user");
 const client = new OAuth2Client("428799205209-2njsnee31fvi9mhv5nrqah05iffvhm8g.apps.googleusercontent.com");
 
-router.get("/dashboard", (req, res) => {
-    var token = req.query.token;
+router.post("/applications", (req, res) => {
+    var token = req.body.token;
     jwt.verify(token, process.env.JWT_SIGNIN_KEY, (err, decoded) => {
         if(!err){
-            res.send("Here is the dashboard!");
-            console.log(decoded);
+            const {_id} = decoded;
+            
+        User.find({_id: _id}).distinct('applications')
+        .exec()
+        .then((docs) => {
+            res.status(200).json(docs);
+        });
         } else {
-            res.send(err);
+            res.status(401).json({access: 'denied'});
         }
     })
 });
+
+router.post("/verify", (req, res) => {
+    var token = req.body.token;
+    jwt.verify(token, process.env.JWT_SIGNIN_KEY, (err, decoded) => {
+        if(!err){
+            res.status(200).json({access: 'granted', name: decoded.name});
+        } else {
+            res.status(401).json({access: 'denied'});
+        }
+    })
+});
+
 
 module.exports = router;

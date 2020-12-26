@@ -4,10 +4,9 @@ import axios from 'axios';
 
 const clientId = '428799205209-2njsnee31fvi9mhv5nrqah05iffvhm8g.apps.googleusercontent.com';
 
-export default function Login() {
+export default function Login(props) {
 
     const onSuccess = (res) => {
-        console.log(res);
         axios({
             method: "POST",
             url: "http://localhost:5000/login/googlelogin",
@@ -19,12 +18,12 @@ export default function Login() {
                 sessionStorage.removeItem('loginToken');
                 sessionStorage.setItem('loginToken', res.data.token);
             }
+            props.loginFunc(1);
         });
     };
 
     const onFailure = (res) => {
-        console.log("There was an error.")
-        console.log(res);
+        props.loginFunc(0);
     }
 
     return (

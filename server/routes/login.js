@@ -22,10 +22,10 @@ const googlelogin = (req, res) => {
                 } else {
                     if(user){
                         // User already exists in the database.
-                        const token = jwt.sign({_id: user._id}, process.env.JWT_SIGNIN_KEY, {expiresIn: '1d'});
+                        const token = jwt.sign({_id: user._id, name: user.name}, process.env.JWT_SIGNIN_KEY, {expiresIn: '1d'});
                         const {_id, name, email} = user;
 
-                        res.json({
+                        res.status(202).json({
                             token,
                             user: {_id, name, email}
                         })
@@ -34,6 +34,7 @@ const googlelogin = (req, res) => {
                         let password = bcrypt.genSalt(10).then(salt => {return bcrypt.hash(email+name+"!!#", salt)}).then(hash => {
                             let newUser = new User({
                                 _id: new mongoose.Types.ObjectId(),
+                                name: name,
                                 username: email,
                                 password: hash,
                             });
@@ -41,7 +42,7 @@ const googlelogin = (req, res) => {
                                 if(err){
                                     return res.status(400).json({error: "Something went wrong."});
                                 }
-                                const token = jwt.sign({_id: data._id}, process.env.JWT_SIGNIN_KEY, {expiresIn: '1d'});
+                                const token = jwt.sign({_id: data._id, name: data.name}, process.env.JWT_SIGNIN_KEY, {expiresIn: '1d'});
                                 const {_id, name, email} = newUser;
         
                                 res.json({
