@@ -9,7 +9,6 @@
   padding-top: 20px;
   padding-left: 2vw;
   width: 20vw;
-  height: 100%;
   background-color: #f0f0f0;
   grid-column-start: 1;
   grid-column-end: 2;
@@ -94,7 +93,7 @@ button.btn_addApplication:focus {
 
 .applicationFooter {
   border: none;
-  background-color: rgba(0,0,0,0);
+  background-color: rgba(0, 0, 0, 0);
   width: 100%;
   color: white;
   cursor: pointer;
@@ -102,11 +101,11 @@ button.btn_addApplication:focus {
   transition: all 0.3s;
 }
 
-.applicationFooter:active, 
+.applicationFooter:active,
 .applicationFooter:hover {
   border: none;
   outline: none;
-  background-color: rgba(0,0,0,0.2);
+  background-color: rgba(0, 0, 0, 0.2);
   width: 100%;
   color: white;
   cursor: pointer;

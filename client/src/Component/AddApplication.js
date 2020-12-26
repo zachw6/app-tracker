@@ -33,7 +33,8 @@ export default function AddApplication(props) {
 
     return (
         <div className="addApplication" style={{width: '100vw', height: '100vh', backgroundColor: 'rgba(0,0,0,0.5)', display:'flex', justifyContent: 'center', alignItems: 'center', position:'absolute'}}>
-            <div style={{width: '80%', height: '80%', backgroundColor: '#f0f0f0', borderRadius: '15px'}}>
+            <div style={{width: '80%', height: '80%', backgroundColor: '#f0f0f0', borderRadius: '15px', position: 'relative'}}>
+                <button onClick={props.toggleAdding} style={{position: 'absolute', top: '10px', right: '20px', border: 'none', outline: 'none', fontSize: '36px', color: '#e33b32'}}>&#10006;</button>
                 <div style={{margin: '20px'}}>
                     <h2 style={{color: '#101010', fontSize: '30px'}}>Add Application</h2>
                     <form onSubmit={createApplication}>

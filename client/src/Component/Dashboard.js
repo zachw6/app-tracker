@@ -9,6 +9,7 @@ export default function Dashboard(props) {
 
     const [applicationLoaded, setApplicationLoaded] = useState(false);
     const [applications, setApplications] = useState([]);
+    const [isAddingApplication, setIsAddingApplication] = useState(false);
 
     const getApplications = () => {
         setApplications([]);
@@ -24,19 +25,23 @@ export default function Dashboard(props) {
       });
       }
 
+      const toggleAddingApplication = () => {
+        setIsAddingApplication(!isAddingApplication);
+      }
+
       // eslint-disable-next-line
       useEffect(getApplications, []);
 
     return (
         <div className="dashboard">
-        <AddApplication getApplications={getApplications}/>
+        {isAddingApplication ? <AddApplication getApplications={getApplications} toggleAdding={toggleAddingApplication} /> : console.log()}
             <div className="dashboardBody">
             <header>
                 <h1 className="title" style={{float:'left', display:'inline-block'}}>AppTracker</h1> <h2 className="settingsTitle" style={{float: 'right', display:'inline-block'}}>Settings</h2>
             </header>
                 <div className="dashboardFilter"><h1>Filter: </h1></div>
                 <div className="dashboardApplications">
-                    <h1 style={{display: 'inline-block'}}>Applications ({applications.length})</h1><button className="btn_addApplication" style={{display:'inline-block'}}>+</button>
+                    <h1 style={{display: 'inline-block'}}>Applications ({applications.length})</h1><button onClick={toggleAddingApplication} className="btn_addApplication" style={{display:'inline-block'}}>+</button>
                     {applicationLoaded ? applications.map((application) => {
                         return <Application companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted}/>
                     }) : <p style={{color: 'black'}}>Not logged in.</p>}
