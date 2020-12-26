@@ -3,6 +3,7 @@ import React from 'react'
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 import Application from './Application';
+import AddApplication from './AddApplication';
 
 export default function Dashboard(props) {
 
@@ -28,6 +29,7 @@ export default function Dashboard(props) {
 
     return (
         <div className="dashboard">
+        <AddApplication getApplications={getApplications}/>
             <div className="dashboardBody">
             <header>
                 <h1 className="title" style={{float:'left', display:'inline-block'}}>AppTracker</h1> <h2 className="settingsTitle" style={{float: 'right', display:'inline-block'}}>Settings</h2>
