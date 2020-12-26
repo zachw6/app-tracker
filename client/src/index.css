@@ -1,10 +1,11 @@
 html,
 body {
-  background: #008cff;
+  background: white;
   color: white;
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
 h1,
@@ -24,13 +25,14 @@ h6 {
   justify-content: center;
   flex-direction: row;
   flex-wrap: nowrap;
+  background-color: #008cff;
 }
 
 .centerContent {
   text-align: center;
 }
 
-.centerContent button.dashboard {
+.centerContent button.btn_dashboard {
   color: white;
   cursor: pointer;
   font-size: 18px;
@@ -41,9 +43,9 @@ h6 {
   transition: all 0.3s;
 }
 
-.centerContent button.dashboard:hover,
-.centerContent button.dashboard:focus,
-.centerContent button.dashboard:active {
+.centerContent button.btn_dashboard:hover,
+.centerContent button.btn_dashboard:focus,
+.centerContent button.btn_dashboard:active {
   color: #008cff;
   font-size: 18px;
   border-radius: 10px;

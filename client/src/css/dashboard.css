@@ -1,0 +1,56 @@
+.dashboardBody {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-rows: 5vh 95vh;
+  height: 100%;
+}
+
+.dashboardFilter {
+  padding-top: 20px;
+  padding-left: 2vw;
+  width: 20vw;
+  height: 100%;
+  background-color: #f0f0f0;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.dashboardApplications {
+  padding-top: 20px;
+  margin-left: 20px;
+  grid-column-start: 2;
+  grid-column-end: 5;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+header {
+  display: block;
+  color: white;
+  background-color: #008cff;
+  grid-column-start: 1;
+  grid-column-end: 5;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.dashboard h1.title {
+  color: white;
+  margin: 5px 2vw;
+}
+
+.dashboard h2.settingsTitle {
+  color: white;
+  margin: 5px 2vw;
+}
+
+.dashboard {
+  background-color: white;
+  height: 100vh;
+}
+
+.dashboard h1 {
+  color: black;
+}
