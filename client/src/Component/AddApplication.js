@@ -92,12 +92,12 @@ export default function AddApplication(props) {
                 <div style={{margin: '20px'}}>
                     <h2 style={{color: '#101010', fontSize: '30px'}}>Add Application</h2>
                     <form onSubmit={createApplication}>
-                        <h3 className="addApplicationTitle">Company Name: </h3> <input type="text" name="companyName" id="companyName"></input><br />
-                        <h3 className="addApplicationTitle">Position: </h3><input type="text" name="position" id="position"></input><br />
-                        <h3 className="addApplicationTitle">Applied: </h3><DatePicker selected={appliedDate} onChange={date => setAppliedDate(date)} /><br />
+                        <h3 className="addApplicationTitle">Company Name*: </h3> <input required type="text" name="companyName" id="companyName"></input><br />
+                        <h3 className="addApplicationTitle">Position*: </h3><input required type="text" name="position" id="position"></input><br />
+                        <h3 className="addApplicationTitle">Applied*: </h3><DatePicker required selected={appliedDate} onChange={date => setAppliedDate(date)} /><br />
                         
-                        <h3 className="addApplicationTitle">Status: </h3>
-                        <select onChange={checkInterviewScheduled} name="status" id="status">
+                        <h3 className="addApplicationTitle">Status*: </h3>
+                        <select required onChange={checkInterviewScheduled} name="status" id="status">
                         <option value="Application Sent">Application Sent</option>
                         <option value="In Communication">In Communication</option>
                         <option value="Interview Scheduled">Interview Scheduled</option>
@@ -105,17 +105,16 @@ export default function AddApplication(props) {
                         <option value="Job Offer">Job Offered</option>
                         <option value="Job Accepted">Job Accepted</option>
                         <option value="Rejected">Rejected</option>
-                        </select><span className="interviewSchedule">Date/Time: <DatePicker selected={interviewTime} onChange={date => setInterviewTime(date)} showTimeSelect /></span><br />
-
+                        </select><span className="interviewSchedule">Date/Time: <DatePicker selected={interviewTime} onChange={date => setInterviewTime(date)} showTimeSelect dateFormat="Pp" timeFormat="p" /></span><br />
                         <h3 className="addApplicationTitle">Interviewer: </h3><input type="text" name="interviewer" id="interviewer"></input><br />
                         <h3 className="addApplicationTitle">Follow-Up: </h3>
-                        <select name="followUp" id="followUp">
+                        <select required name="followUp" id="followUp">
                         <option value="false">Incomplete</option>
                         <option value="true">Complete</option>
                         </select><br />
 
                         <h3 className="addApplicationTitle">Documents Submitted: </h3>
-                        <select name="submittedDocument" id="submittedDocument">
+                        <select required name="submittedDocument" id="submittedDocument">
                         <option value="Resume">Resume</option>
                         <option value="Cover Letter">Cover Letter</option>
                         <option value="Transcript">Transcript</option>
