@@ -14,6 +14,7 @@
   grid-column-end: 2;
   grid-row-start: 2;
   grid-row-end: 3;
+  border-bottom-right-radius: 30px;
 }
 
 .dashboardApplications {
@@ -111,6 +112,10 @@ button.btn_addApplication:focus {
   cursor: pointer;
 }
 
+.addApplication {
+  color: #101010;
+}
+
 h3.addApplicationTitle {
   color: #101010;
   margin: 15px 0px;
@@ -125,4 +130,10 @@ h3.addApplicationTitle {
   border: 1px solid black;
   height: 25px;
   background-color: white;
+}
+
+.interviewSchedule {
+  display: none;
+  color: #101010;
+  margin-left: 20px;
 }

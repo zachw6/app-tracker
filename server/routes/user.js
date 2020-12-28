@@ -5,6 +5,7 @@ const {OAuth2Client} = require('google-auth-library');
 const router = express.Router();
 
 const User = require("../models/user");
+const Application = require("../models/application");
 const client = new OAuth2Client("428799205209-2njsnee31fvi9mhv5nrqah05iffvhm8g.apps.googleusercontent.com");
 
 router.post("/applications", (req, res) => {
@@ -13,7 +14,7 @@ router.post("/applications", (req, res) => {
         if(!err){
             const {_id} = decoded;
             
-        User.find({_id: _id}).distinct('applications')
+        User.find({_id: _id}).select('applications').sort({createdAt: 'descending'})
         .exec()
         .then((docs) => {
             res.status(200).json(docs);
@@ -30,17 +31,19 @@ router.post("/createApplication", (req, res) => {
         if(!err){
             const {_id} = decoded;
             const appData = req.body.appData;
-            const application = 
-            {
+            const application = new Application({
+                _id: new mongoose.Types.ObjectId(),
+                appliedDate: appData.appliedDate,
                 companyName: appData.companyName,
-                appliedDate: appData.applied,
                 position: appData.position,
                 interviewer: appData.interviewer,
                 status: appData.status,
+                interviewTime: appData.interviewTime,
                 followUp: appData.followUp,
-                documentsSubmitted: [],
-                notes: []
-            }
+                documentsSubmitted: appData.documentsSubmitted,
+                notes: appData.notes
+            });
+
             User.findByIdAndUpdate({_id}, {$push: {'applications': application}}, { safe: true, upsert: true },
             function (err) {
               if (err) {

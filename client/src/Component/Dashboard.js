@@ -10,17 +10,22 @@ export default function Dashboard(props) {
     const [applicationLoaded, setApplicationLoaded] = useState(false);
     const [applications, setApplications] = useState([]);
     const [isAddingApplication, setIsAddingApplication] = useState(false);
+    const [applicationIndex, setApplicationIndex] = useState(0);
 
     const getApplications = () => {
-        setApplications([]);
         axios({
           method: "POST",
           url: "http://localhost:5000/user/applications",
           data: {token: sessionStorage.getItem('loginToken')}
       }).then(res => {
-        for(let applicationIndex in res.data)
-          applications.push(res.data[applicationIndex]);
-        setApplications(applications);
+        setApplications([]);
+        let newApplications = [...applications];
+        let updateIndex = applicationIndex;
+        while(newApplications.length < res.data[0].applications.length){
+            newApplications.push(res.data[0].applications[updateIndex++]);
+        }
+        setApplicationIndex(updateIndex);
+        setApplications(newApplications);
         setApplicationLoaded(true);
       });
       }
@@ -34,7 +39,7 @@ export default function Dashboard(props) {
 
     return (
         <div className="dashboard">
-        {isAddingApplication ? <AddApplication getApplications={getApplications} toggleAdding={toggleAddingApplication} /> : console.log()}
+        {isAddingApplication ? <AddApplication getApplications={getApplications} toggleAdding={toggleAddingApplication} /> : null}
             <div className="dashboardBody">
             <header>
                 <h1 className="title" style={{float:'left', display:'inline-block'}}>AppTracker</h1> <h2 className="settingsTitle" style={{float: 'right', display:'inline-block'}}>Settings</h2>
@@ -43,7 +48,7 @@ export default function Dashboard(props) {
                 <div className="dashboardApplications">
                     <h1 style={{display: 'inline-block'}}>Applications ({applications.length})</h1><button onClick={toggleAddingApplication} className="btn_addApplication" style={{display:'inline-block'}}>+</button>
                     {applicationLoaded ? applications.map((application) => {
-                        return <Application companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted}/>
+                        return <Application key={application._id} companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted} interviewTime={application.interviewTime}/>
                     }) : <p style={{color: 'black'}}>Not logged in.</p>}
                 </div>
             </div>
