@@ -94,7 +94,7 @@ export default function AddApplication(props) {
                     <form onSubmit={createApplication}>
                         <h3 className="addApplicationTitle">Company Name*: </h3> <input required type="text" name="companyName" id="companyName"></input><br />
                         <h3 className="addApplicationTitle">Position*: </h3><input required type="text" name="position" id="position"></input><br />
-                        <h3 className="addApplicationTitle">Applied*: </h3><DatePicker required selected={appliedDate} onChange={date => setAppliedDate(date)} /><br />
+                        <h3 className="addApplicationTitle">Applied*: </h3><div style={{display: 'inline-flex'}}><DatePicker required selected={appliedDate} onChange={date => setAppliedDate(date)} /></div><br />
                         
                         <h3 className="addApplicationTitle">Status*: </h3>
                         <select required onChange={checkInterviewScheduled} name="status" id="status">
