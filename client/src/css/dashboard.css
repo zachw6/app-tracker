@@ -1,3 +1,15 @@
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+select,
+button,
+textarea,
+input {
+  font-family: Montserrat;
+}
+
 .dashboardBody {
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
@@ -112,28 +124,199 @@ button.btn_addApplication:focus {
   cursor: pointer;
 }
 
+.labelField {
+  width: 95%;
+  background-color: red;
+  display: flex;
+  align-items: center;
+}
+
 .addApplication {
   color: #101010;
+}
+
+.addApplication .addApplicationHeader {
+  background-color: #008cff;
+  position: absolute;
+  display: flex;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+}
+
+.addApplication .addApplicationForm {
+  position: absolute;
+  height: calc(100% - 60px);
+  top: 60px;
+  width: 100%;
+}
+
+.addApplication .formContainer {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-areas: "leftSideForm rightSideForm";
+}
+
+.addApplication .leftSideForm {
+  grid-area: leftSideForm;
+  margin-left: 20px;
+}
+
+.addApplication .rightSideForm {
+  grid-area: rightSideForm;
 }
 
 h3.addApplicationTitle {
   color: #101010;
   margin: 15px 0px;
-  display: inline-block;
-  margin-right: 20px;
+  font-weight: 500;
 }
 
-.addApplication input {
+.addApplication input,
+.addApplication textarea {
+  box-sizing: border-box;
+  padding: 10px 5px 10px 10px;
   display: inline-block;
-  border-radius: 2px;
+  border-radius: 6px;
   outline: none;
   border: 1px solid black;
-  height: 25px;
   background-color: white;
+  width: 95%;
+}
+
+.addApplication textarea {
+  width: 95% !important;
+  resize: none !important;
+  height: 100px !important;
+}
+
+.react-datepicker-ignore-onclickoutside {
+  box-sizing: border-box;
+  padding: 10px 5px 10px 10px;
+  display: inline-block;
+  border-radius: 6px;
+  outline: none;
+  border: 1px solid black;
+  background-color: white;
+  width: 95%;
+}
+
+.addApplication select::-ms-expand {
+  display: none;
+}
+
+.addApplicationSelect {
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  position: relative;
+}
+
+.addApplicationSelect select {
+  appearance: none;
+  padding: 10px 5px 10px 10px;
+  border-radius: 6px;
+  outline: none;
+  border: 1px solid rgb(0, 0, 0);
+  background-color: white;
+  width: 95%;
+}
+
+.addApplicationSelect::after {
+  content: "";
+  position: absolute;
+  right: 40px;
+  top: 15px;
+  width: 15px;
+  height: 10px;
+  background-color: #008cff;
+  clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+}
+
+.addApplication button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background-color: #008cff;
+  color: white;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: Montserrat;
+}
+
+.addApplication button:hover,
+.addApplication input[type="submit"]:hover {
+  background-color: #007add;
+}
+
+.addApplication .notesDocsContainer {
+  box-sizing: border-box;
+  overflow: auto;
+  width: 95%;
+  margin-top: 20px;
+  height: 210px;
+  word-wrap: normal;
+  background-color: #f0f0f0;
+  border: 1px solid black;
+  padding: 10px;
+  scrollbar-color: #007add transparent;
+  scrollbar-width: thin;
+}
+
+.addApplication .notesDocsContainer li {
+  list-style-type: none;
+  margin-left: 20px;
+}
+
+.addApplication .notesDocsContainer button {
+  background-color: transparent;
+  font-size: 18px;
+  color: #e33b32;
+}
+
+/* Changing scrollbar in Chrome */
+.addApplication .notesDocsContainer::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: darkgray;
+}
+
+.addApplication .notesDocsContainer::-webkit-scrollbar {
+  width: 12px;
+  background-color: darkgray;
+}
+
+.addApplication .notesDocsContainer::-webkit-scrollbar-thumb {
+  background-color: #007add;
+}
+
+.react-datepicker-wrapper {
+  display: inline !important;
+  padding: 0;
+  border: 0;
+}
+
+.addApplication input[type="submit"] {
+  position: absolute;
+  bottom: 0px;
+  color: white;
+  border-radius: 0px;
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: #008cff;
+  transition: all 0.2s;
+  cursor: pointer;
+  height: 50px;
+  font-weight: bold;
 }
 
 .interviewSchedule {
   display: none;
-  color: #101010;
-  margin-left: 20px;
+  padding-left: 20px;
+  border-left: #008cff solid 3px;
 }

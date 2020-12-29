@@ -29,9 +29,27 @@ export default function Dashboard(props) {
         setApplicationLoaded(true);
       });
       }
+      
+      function noScroll() {
+        window.scrollTo(0, 0);
+      }
 
       const toggleAddingApplication = () => {
+        window.scrollTo(0, 0);
         setIsAddingApplication(!isAddingApplication);
+        if(isAddingApplication === true){
+            console.log("no longer adding application")
+            window.onscroll = function() {};
+            document.ontouchmove = function(e){ 
+                e.preventDefault(); 
+            }
+        } else {
+            window.onscroll = noScroll;
+            console.log("adding applicaition");
+            document.ontouchmove = function(e){ 
+                return true; 
+              }
+        }
       }
 
       // eslint-disable-next-line
@@ -42,7 +60,7 @@ export default function Dashboard(props) {
         {isAddingApplication ? <AddApplication getApplications={getApplications} toggleAdding={toggleAddingApplication} /> : null}
             <div className="dashboardBody">
             <header>
-                <h1 className="title" style={{float:'left', display:'inline-block'}}>AppTracker</h1> <h2 className="settingsTitle" style={{float: 'right', display:'inline-block'}}>Settings</h2>
+                <h1 className="title" style={{float:'left', display:'inline-block'}}>AppTracker</h1>
             </header>
                 <div className="dashboardFilter"><h1>Filter: </h1></div>
                 <div className="dashboardApplications">
