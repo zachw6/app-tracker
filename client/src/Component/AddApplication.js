@@ -11,8 +11,6 @@ export default function AddApplication(props) {
     const [interviewTime, setInterviewTime] = useState(new Date());
     const [documentsSubmitted, setDocumentsSubmitted] = useState([]);
     const [notes, setNotes] = useState([]);
-    
-    window.onscroll = function () { window.scrollTo(0, 0); };
 
     const addSubmittedDocument = () => {
         let documentsSubmittedCopy = [...documentsSubmitted];
@@ -33,10 +31,10 @@ export default function AddApplication(props) {
     const checkInterviewScheduled = () => {
         if(document.getElementById('status').value === "Interview Scheduled"){
             document.getElementsByClassName('interviewSchedule')[0].style.display = "block";
-            document.getElementsByClassName('notesDocsContainer')[0].style.height = "300px";
+            document.getElementsByClassName('notesDocsContainer')[0].style.height = "15em";
         } else {
             document.getElementsByClassName('interviewSchedule')[0].style.display = "none";
-            document.getElementsByClassName('notesDocsContainer')[0].style.height = "210px";
+            document.getElementsByClassName('notesDocsContainer')[0].style.height = "10.3em";
         }
     }
 
@@ -91,18 +89,17 @@ export default function AddApplication(props) {
 
     return (
         <div className="addApplication" style={{width: '100%', height: '100vh', backgroundColor: 'rgba(0,0,0,0.5)', display:'flex', justifyContent: 'center', alignItems: 'center', position:'absolute'}}>
-            <div style={{width: '1000px', height: '800px', backgroundColor: '#f0f0f0', position: 'relative'}}>
-                <button onClick={props.toggleAdding} style={{position: 'absolute', right: '20px', border: 'none', outline: 'none', fontSize: '36px', color: '#e33b32', zIndex: '2', backgroundColor: 'rgba(0,0,0,0)', transform: 'translateY(-10px)'}}>&#10006;</button>
-                <div className="addApplicationHeader"><h2 style={{color: 'white', fontSize: '30px', marginLeft: '20px', marginTop: '15px'}}>Add Application</h2></div>
+            <div style={{width: '60%', height: '70%', backgroundColor: '#f0f0f0', position: 'relative'}}>
+                <div className="addApplicationHeader"><h2>Add Application</h2><button onClick={props.toggleAdding}>&#10006;</button></div>
                     <form className="addApplicationForm" onSubmit={createApplication}>
                         <div className="formContainer">
                             {/* Right side of form */ }
                             <div className="leftSideForm">
-                                <h3 className="addApplicationTitle">Company Name <span style={{color: '#fb2424', fontSize:'12px'}}>(REQUIRED)</span></h3><input required type="text" name="companyName" id="companyName"></input><br />
-                                <h3 className="addApplicationTitle">Position <span style={{color: '#fb2424', fontSize:'12px'}}>(REQUIRED)</span></h3><input required type="text" name="position" id="position"></input><br />
-                                <h3 className="addApplicationTitle">Applied <span style={{color: '#fb2424', fontSize:'12px'}}>(REQUIRED)</span></h3><div style={{width: '100%'}}><DatePicker required selected={appliedDate} onChange={date => setAppliedDate(date)} /></div>
+                                <h3 className="addApplicationTitle">Company Name <span style={{color: '#fb2424', fontSize:'0.6em'}}>(REQUIRED)</span></h3><input required type="text" name="companyName" id="companyName"></input><br />
+                                <h3 className="addApplicationTitle">Position <span style={{color: '#fb2424', fontSize:'0.6em'}}>(REQUIRED)</span></h3><input required type="text" name="position" id="position"></input><br />
+                                <h3 className="addApplicationTitle">Applied <span style={{color: '#fb2424', fontSize:'0.6em'}}>(REQUIRED)</span></h3><div style={{width: '100%'}}><DatePicker required selected={appliedDate} onChange={date => setAppliedDate(date)} /></div>
                                 
-                                <h3 className="addApplicationTitle">Status <span style={{color: '#fb2424', fontSize:'12px'}}>(REQUIRED)</span></h3>
+                                <h3 className="addApplicationTitle">Status <span style={{color: '#fb2424', fontSize:'0.6em'}}>(REQUIRED)</span></h3>
                                     <div className="addApplicationSelect"><select required className="addApplicationSelect" onChange={checkInterviewScheduled} name="status" id="status">
                                         <option value="Application Sent">Application Sent</option>
                                         <option value="In Communication">In Communication</option>

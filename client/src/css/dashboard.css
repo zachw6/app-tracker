@@ -133,6 +133,7 @@ button.btn_addApplication:focus {
 
 .addApplication {
   color: #101010;
+  font-size: 1em;
 }
 
 .addApplication .addApplicationHeader {
@@ -142,14 +143,48 @@ button.btn_addApplication:focus {
   top: 0;
   left: 0;
   width: 100%;
-  height: 60px;
+  height: 3em;
+  align-items: center;
+}
+
+.addApplicationHeader h2 {
+  color: white;
+  font-size: 1.4em;
+  margin-left: 1em;
+}
+
+.addApplication .addApplicationHeader button {
+  color: #e33b32 !important;
+  font-size: 1.4em;
+  background-color: transparent;
+  align-self: center !important;
+  height: 100%;
+  padding: 0px 1em !important;
+  margin-top: 0px !important;
+  margin-left: auto;
+  border-radius: 0px !important;
 }
 
 .addApplication .addApplicationForm {
-  position: absolute;
-  height: calc(100% - 60px);
-  top: 60px;
+  position: relative;
+  height: calc(100% - 3em);
+  top: 3em;
   width: 100%;
+}
+
+/* Changing scrollbar in Chrome */
+.addApplication .formContainer::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: darkgray;
+}
+
+.addApplication .formContainer::-webkit-scrollbar {
+  width: 12px;
+  background-color: darkgray;
+}
+
+.addApplication .formContainer::-webkit-scrollbar-thumb {
+  background-color: #007add;
 }
 
 .addApplication .formContainer {
@@ -158,11 +193,15 @@ button.btn_addApplication:focus {
   display: grid;
   grid-template-columns: 50% 50%;
   grid-template-areas: "leftSideForm rightSideForm";
+  max-height: 800px;
+  overflow-y: scroll;
+  scrollbar-color: #007add transparent;
+  scrollbar-width: thin;
 }
 
 .addApplication .leftSideForm {
   grid-area: leftSideForm;
-  margin-left: 20px;
+  margin-left: 1.5em;
 }
 
 .addApplication .rightSideForm {
@@ -171,14 +210,14 @@ button.btn_addApplication:focus {
 
 h3.addApplicationTitle {
   color: #101010;
-  margin: 15px 0px;
+  margin: 0.5em 0;
   font-weight: 500;
 }
 
 .addApplication input,
 .addApplication textarea {
   box-sizing: border-box;
-  padding: 10px 5px 10px 10px;
+  padding: 0.6em 0.3em 0.6em 0.5em;
   display: inline-block;
   border-radius: 6px;
   outline: none;
@@ -190,7 +229,8 @@ h3.addApplicationTitle {
 .addApplication textarea {
   width: 95% !important;
   resize: none !important;
-  height: 100px !important;
+  height: 5em !important;
+  font-size: 0.9em !important;
 }
 
 .react-datepicker-ignore-onclickoutside {
@@ -217,12 +257,14 @@ h3.addApplicationTitle {
 
 .addApplicationSelect select {
   appearance: none;
-  padding: 10px 5px 10px 10px;
+  cursor: pointer;
+  padding: 0.6em 0.3em 0.6em 0.5em;
   border-radius: 6px;
   outline: none;
   border: 1px solid rgb(0, 0, 0);
   background-color: white;
   width: 95%;
+  box-sizing: border-box;
 }
 
 .addApplicationSelect::after {
@@ -259,7 +301,7 @@ h3.addApplicationTitle {
   overflow: auto;
   width: 95%;
   margin-top: 20px;
-  height: 210px;
+  height: 10.3em;
   word-wrap: normal;
   background-color: #f0f0f0;
   border: 1px solid black;
@@ -301,7 +343,7 @@ h3.addApplicationTitle {
 }
 
 .addApplication input[type="submit"] {
-  position: absolute;
+  position: relative;
   bottom: 0px;
   color: white;
   border-radius: 0px;
