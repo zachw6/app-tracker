@@ -11,8 +11,9 @@ input {
 }
 
 .dashboardBody {
+  font-size: clamp(0.9vw, 12px, 24px);
   display: grid;
-  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-columns: 20% 80%;
   grid-template-rows: 5vh 95vh;
   height: 100%;
 }
@@ -30,9 +31,9 @@ input {
 .dashboardApplications {
   max-height: 100%;
   overflow-y: scroll;
-  padding-top: 20px;
-  padding-left: 20px;
-  padding-bottom: 30px;
+  padding-top: 1em;
+  padding-left: 1.5em;
+  padding-bottom: 1.4em;
   grid-column-start: 2;
   grid-column-end: 5;
   grid-row-start: 2;
@@ -83,12 +84,12 @@ header {
 }
 
 button.btn_addApplication {
-  height: 50px;
-  width: 50px;
-  margin-left: 20px;
+  height: 2em;
+  width: 2em;
+  margin-left: 1em;
   border-radius: 0px;
   border: none;
-  font-size: 24px;
+  font-size: 1.5em;
   outline: none;
   cursor: pointer;
   transition: background-color 0.2s;
@@ -100,22 +101,37 @@ button.btn_addApplication:focus {
 }
 
 .applicationContainer {
+  box-sizing: border-box;
   background-color: #008cff;
-  width: 800px;
+  position: relative;
+  width: 90%;
   margin-top: 30px;
 }
 
 .applicationContainer:last-of-type {
   background-color: #008cff;
-  width: 800px;
+  width: 90%;
   margin: 30px 0px;
 }
 
 .applicationHeader {
-  width: 800px;
-  padding: 15px 15px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 70% 30%;
+  width: 100%;
+  padding: 0.75em;
   margin-left: 10px;
-  font-size: 24px;
+  font-size: 1.4em;
+}
+
+.applicationHeader .companyPostion {
+  justify-self: flex-start;
+}
+
+.applicationHeader .appliedDate {
+  justify-self: flex-end;
+  margin-right: 1em;
+  font-style: italic;
 }
 
 .applicationBody {
@@ -126,6 +142,7 @@ button.btn_addApplication:focus {
 
 .applicationFooter {
   border: none;
+  padding: 0.3em 0;
   background-color: rgba(0, 0, 0, 0);
   width: 100%;
   color: white;

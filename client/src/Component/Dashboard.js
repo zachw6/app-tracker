@@ -152,32 +152,34 @@ useEffect(updateFilters,[filteredApplications, updateFilters]);
                 <div className="dashboardFilter">
                     <h1>Filter: </h1>
                         <input className="FilterTextBox" name="filter" id="filter" placeholder="Company Name/Position" onChange={()=>{setFilterText(document.getElementsByClassName("FilterTextBox")[0].value);}}></input> <br />
-                        <input type="checkbox" id="applicationSent" name="applicationSent" value="applicationSent" onChange={updateFilters}/>
-                        <label>Application Sent</label>
-                        <br />
-                        <input type="checkbox" id="inCommunication" name="inCommunication" value="inCommunication" onChange={updateFilters}/>
-                        <label>In Communication</label>
-                        <br />
-                        <input type="checkbox" id="interviewScheduled" name="interviewScheduled" value="interviewScheduled" onChange={updateFilters}/>
-                        <label>Interview Scheduled</label>
-                        <br />
-                        <input type="checkbox" id="pendingResponse" name="pendingResponse" value="pendingResponse" onChange={updateFilters}/>
-                        <label>Pending Response</label>
-                        <br />
-                        <input type="checkbox" id="jobOffered" name="jobOffered" value="jobOffered" onChange={updateFilters}/>
-                        <label>Job Offered</label>
-                        <br />
-                        <input type="checkbox" id="jobAccepted" name="jobAccepted" value="jobAccepted" onChange={updateFilters}/>
-                        <label>Job Accepted</label>
-                        <br />
-                        <input type="checkbox" id="jobRejected" name="jobRejected" value="jobRejected" onChange={updateFilters}/>
-                        <label>Job Rejected</label>
-                        <br />
+                        <div className="statusFilters">
+                            <input type="checkbox" id="applicationSent" name="applicationSent" value="applicationSent" onChange={updateFilters}/>
+                            <label>Application Sent</label>
+                            <br />
+                            <input type="checkbox" id="inCommunication" name="inCommunication" value="inCommunication" onChange={updateFilters}/>
+                            <label>In Communication</label>
+                            <br />
+                            <input type="checkbox" id="interviewScheduled" name="interviewScheduled" value="interviewScheduled" onChange={updateFilters}/>
+                            <label>Interview Scheduled</label>
+                            <br />
+                            <input type="checkbox" id="pendingResponse" name="pendingResponse" value="pendingResponse" onChange={updateFilters}/>
+                            <label>Pending Response</label>
+                            <br />
+                            <input type="checkbox" id="jobOffered" name="jobOffered" value="jobOffered" onChange={updateFilters}/>
+                            <label>Job Offered</label>
+                            <br />
+                            <input type="checkbox" id="jobAccepted" name="jobAccepted" value="jobAccepted" onChange={updateFilters}/>
+                            <label>Job Accepted</label>
+                            <br />
+                            <input type="checkbox" id="jobRejected" name="jobRejected" value="jobRejected" onChange={updateFilters}/>
+                            <label>Job Rejected</label>
+                            <br />
+                        </div>
                         <label>Sort: </label>
-                        <select id="sortSelect" name="sortSelect" onChange={updateFilters}>
+                        <div className="filterSelect"><select id="sortSelect" name="sortSelect" onChange={updateFilters}>
                             <option>Date (Descending)</option>
                             <option>Date (Ascending)</option>
-                        </select>
+                        </select></div>
                     </div>
                 <div className="dashboardApplications">
                     <h1 style={{display: 'inline-block'}}>Applications ({filteredApplications.length})</h1><button onClick={toggleAddingApplication} className="btn_addApplication" style={{display:'inline-block'}}>+</button>

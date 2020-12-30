@@ -15,7 +15,7 @@ export default function Application(props) {
     if(droppedDown){
         return (        
         <div className="applicationContainer">
-        <div className="applicationHeader"><span style={{fontWeight: 'bold'}}>{props.companyName}</span> - {props.position} (Applied: {moment(props.appliedDate).format('MM/DD/YYYY')})</div>
+        <div className="applicationHeader"><div className="companyPosition"><span style={{fontWeight: 'bold'}}>{props.companyName}</span> - {props.position}</div><div className="appliedDate">Applied: {moment(props.appliedDate).format('MM/DD/YYYY')}</div></div>
         <div className="applicationBody">
             <div><span style={{fontWeight: 'bold'}}>Status: </span> {props.status} {props.status === "Interview Scheduled" ? "(" + moment(props.interviewTime).format('MM/DD/YYYY h:mm A') + ")" : null}</div>
             <div><span style={{fontWeight: 'bold'}}>Interviewer: </span> {props.interviewer}</div>
@@ -28,8 +28,7 @@ export default function Application(props) {
     } else {
         return (        
         <div className="applicationContainer">
-        <div className="applicationHeader"><span style={{fontWeight: 'bold'}}>{props.companyName}</span> - {props.position} (Applied: {moment(props.appliedDate).format('MM/DD/YYYY')})</div>
-        <div className="applicationBody">
+        <div className="applicationHeader"><div className="companyPosition"><span style={{fontWeight: 'bold'}}>{props.companyName}</span> - {props.position}</div><div className="appliedDate">Applied: {moment(props.appliedDate).format('MM/DD/YYYY')}</div></div>        <div className="applicationBody">
             <div><span style={{fontWeight: 'bold'}}>Status: </span> {props.status} {props.status === "Interview Scheduled" ? "(" + moment(props.interviewTime).format('MM/DD/YYYY h:mm A') + ")" : null}</div>
             <div><span style={{fontWeight: 'bold'}}>Interviewer: </span> {props.interviewer}</div>
         </div>

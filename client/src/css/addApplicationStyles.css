@@ -8,6 +8,7 @@
   align-items: center;
   color: #101010;
   font-size: 1em;
+  z-index: 5;
 }
 
 .addApplicationContainer {
