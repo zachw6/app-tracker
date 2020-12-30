@@ -12,6 +12,7 @@ export default function Dashboard(props) {
     const [applications, setApplications] = useState([]);
     const [isAddingApplication, setIsAddingApplication] = useState(false);
     const [applicationIndex, setApplicationIndex] = useState(0);
+    const [filteredApplications, setFilteredApplications] = useState([]);
     const [filterText, setFilterText] = useState("");
     const [filters, setFilters] = useState({
         applicationSent: false,
@@ -25,6 +26,7 @@ export default function Dashboard(props) {
 
     const updateFilters = () => {
         let filtersCopy = Object.assign({}, filters);
+        let filteredApplicationsArr = [];
         if(document.getElementById("applicationSent").checked){
             filtersCopy.applicationSent = true;
         } else {
@@ -60,7 +62,25 @@ export default function Dashboard(props) {
         } else {
             filtersCopy.jobRejected = false;
         }
-        console.log(filtersCopy);
+        
+        applications.forEach((application) => {
+            if(filtersCopy.applicationSent && application.status === "Application Sent")
+                filteredApplicationsArr.push(application);
+            if(filtersCopy.inCommunication && application.status === "In Communication")
+                filteredApplicationsArr.push(application);
+            if(filtersCopy.interviewScheduled && application.status === "Interview Scheduled")
+                filteredApplicationsArr.push(application);
+            if(filtersCopy.pendingResponse && application.status === "Pending Response")
+                filteredApplicationsArr.push(application);
+            if(filtersCopy.jobOffered && application.status === "Job Offered")
+                filteredApplicationsArr.push(application);
+            if(filtersCopy.jobAccepted && application.status === "Job Accepted")
+                filteredApplicationsArr.push(application);
+            if(filtersCopy.jobRejected && application.status === "Job Rejected")
+                filteredApplicationsArr.push(application);
+        })
+
+        setFilteredApplications(filteredApplicationsArr);
         setFilters(filtersCopy);
     }
 
@@ -121,34 +141,17 @@ export default function Dashboard(props) {
                         <label for="jobRejected">Job Rejected</label>
                     </div>
                 <div className="dashboardApplications">
-                    <h1 style={{display: 'inline-block'}}>Applications ({applications.length})</h1><button onClick={toggleAddingApplication} className="btn_addApplication" style={{display:'inline-block'}}>+</button>
-                    {applicationLoaded ? applications.map((application) => {
-                        
-                        if(filterText.length === 0){
-                            if(!filters.applicationSent && !filters.inCommunication && !filters.interviewScheduled && !filters.pendingResponse && !filters.jobOffered && !filters.jobAccepted && !filters.jobRejected)
+                    <h1 style={{display: 'inline-block'}}>Applications ({(filters.applicationSent || filters.inCommunication || filters.interviewScheduled || filters.jobAccepted || filters.jobOffered || filters.jobRejected || filters.pendingResponse) ? filteredApplications.length : applications.length})</h1><button onClick={toggleAddingApplication} className="btn_addApplication" style={{display:'inline-block'}}>+</button>
+                    {applicationLoaded ? 
+                    (filters.applicationSent || filters.inCommunication || filters.interviewScheduled || filters.jobAccepted || filters.jobOffered || filters.jobRejected || filters.pendingResponse ? filteredApplications.map( (application) => {
+                        if((application.companyName.toLowerCase().includes(filterText.toLowerCase()) || application.position.toLowerCase().includes(filterText.toLowerCase()) || filterText.toLowerCase().includes(application.companyName.toLowerCase()) || filterText.toLowerCase().includes(application.position.toLowerCase()))){
                             return <Application key={application._id} companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted} interviewTime={application.interviewTime}/>
-                            if(filters.applicationSent && application.status === "Application Sent")
-                            return <Application key={application._id} companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted} interviewTime={application.interviewTime}/>
-                            if(filters.inCommunication && application.status === "In Communication")
-                            return <Application key={application._id} companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted} interviewTime={application.interviewTime}/>
-                            if(filters.interviewScheduled && application.status === "Interview Scheduled")
-                            return <Application key={application._id} companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted} interviewTime={application.interviewTime}/>
-                            if(filters.pendingResponse && application.status === "Pending Response")
-                            return <Application key={application._id} companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted} interviewTime={application.interviewTime}/>
-                            if(filters.jobOffered && application.status === "Job Offered")
-                            return <Application key={application._id} companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted} interviewTime={application.interviewTime}/>
-                            if(filters.jobAccepted && application.status === "Job Accepted")
-                            return <Application key={application._id} companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted} interviewTime={application.interviewTime}/>
-                            if(filters.jobRejected && application.status === "Rejected")
-                            return <Application key={application._id} companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted} interviewTime={application.interviewTime}/>
-                        } else {
+                        } else { return null; }
+                    }): applications.map((application => {
                             if((application.companyName.toLowerCase().includes(filterText.toLowerCase()) || application.position.toLowerCase().includes(filterText.toLowerCase()) || filterText.toLowerCase().includes(application.companyName.toLowerCase()) || filterText.toLowerCase().includes(application.position.toLowerCase()))){
                                 return <Application key={application._id} companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted} interviewTime={application.interviewTime}/>
-                            }
-                        }
-                        
-                            return null;
-                    }) : <p style={{color: 'black'}}>Not logged in.</p>}
+                            } else { return null; }
+                    }))) : <p style={{color: 'black'}}>Not logged in.</p>}
                 </div>
             </div>
         </div>

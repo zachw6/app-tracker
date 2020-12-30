@@ -20,6 +20,7 @@ function App() {
   useEffect(() => {
     if(sessionStorage.getItem('loginToken') == null){
       setLogin(false);
+      document.title = "Apptracker | Login";
   } else {
 
     axios({
@@ -30,6 +31,7 @@ function App() {
       if(res.data.access === 'granted'){
         setName(res.data.name);
         setLogin(true);
+        document.title = "Apptracker | Dashboard"
       } else {
         console.log("User not logged in.")
         setLogin(false);
