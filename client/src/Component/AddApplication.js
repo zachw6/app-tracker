@@ -1,5 +1,6 @@
 import React from 'react';
 import '../css/dashboard.css';
+import '../css/addApplicationStyles.css'
 import axios from 'axios';
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css';
@@ -88,8 +89,8 @@ export default function AddApplication(props) {
     }
 
     return (
-        <div className="addApplication" style={{width: '100%', height: '100vh', backgroundColor: 'rgba(0,0,0,0.5)', display:'flex', justifyContent: 'center', alignItems: 'center', position:'absolute'}}>
-            <div style={{width: '60%', height: '70%', backgroundColor: '#f0f0f0', position: 'relative'}}>
+        <div className="addApplication">
+            <div className="addApplicationContainer">
                 <div className="addApplicationHeader"><h2>Add Application</h2><button onClick={props.toggleAdding}>&#10006;</button></div>
                     <form className="addApplicationForm" onSubmit={createApplication}>
                         <div className="formContainer">
@@ -136,7 +137,7 @@ export default function AddApplication(props) {
                                 </select> </div>
                                 <button type="button" onClick={addSubmittedDocument}>Add Document</button> <br />
                                 
-                                <h3 className="addApplicationTitle">Notes: </h3><textarea style={{}} type="text" name="note" id="note"></textarea><br />
+                                <h3 className="addApplicationTitle">Notes: </h3><textarea type="text" name="note" id="note"></textarea><br />
                                 <button type="button" onClick= { addNote } >Add Note</button>
 
                                 <div className="notesDocsContainer">

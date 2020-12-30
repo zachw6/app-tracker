@@ -67,9 +67,6 @@ export default function Dashboard(props) {
         }
         
         applications.forEach((application) => {
-            // if(!filtersCopy.applicationSent && !filtersCopy.inCommunication && !filtersCopy.interviewScheduled && !filtersCopy.pendingResponse && !filtersCopy.jobOffered && !filtersCopy.jobAccepted && !filtersCopy.jobRejected)
-
-            
             if((application.companyName.toLowerCase().includes(filterText.toLowerCase()) || application.position.toLowerCase().includes(filterText.toLowerCase()) || filterText.toLowerCase().includes(application.companyName.toLowerCase()) || filterText.toLowerCase().includes(application.position.toLowerCase()))){
                 if(filtersCopy.applicationSent && application.status === "Application Sent")
                     filteredApplicationsArr.push(application);
