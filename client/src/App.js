@@ -17,6 +17,11 @@ function App() {
     setLogin(state);
   }
 
+  const logOut = () => {
+    sessionStorage.removeItem("loginToken");
+    setLogin(false);
+}
+
   useEffect(() => {
     if(sessionStorage.getItem('loginToken') == null){
       setLogin(false);
@@ -65,7 +70,7 @@ function App() {
         </div>
       </Route>
       <Route exact={true} path="/dashboard">
-        {login ? <Dashboard /> : <Unauthorized />}
+        {login ? <Dashboard logout={logOut} /> : <Unauthorized />}
       </Route>
     </Router>
   );

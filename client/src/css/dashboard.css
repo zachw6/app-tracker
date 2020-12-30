@@ -40,7 +40,9 @@ input {
 }
 
 header {
-  display: block;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  align-items: center;
   color: white;
   background-color: #008cff;
   grid-column-start: 1;
@@ -52,7 +54,22 @@ header {
 .dashboard h1.title {
   color: white;
   font-size: 3vh;
-  margin: 5px 2vw;
+  margin-left: 2vw;
+}
+
+.dashboard h5 {
+  font-size: 2vh;
+  margin-right: 2vw;
+  cursor: pointer;
+}
+
+.dashboard h5 a {
+  color: white;
+  text-decoration: none;
+}
+
+.dashboard h5 a:hover {
+  color: #fc4036 !important;
 }
 
 .dashboard h2.settingsTitle {
@@ -129,13 +146,6 @@ button.btn_addApplication:focus {
   width: 100%;
   color: white;
   cursor: pointer;
-}
-
-.labelField {
-  width: 95%;
-  background-color: red;
-  display: flex;
-  align-items: center;
 }
 
 .addApplication {

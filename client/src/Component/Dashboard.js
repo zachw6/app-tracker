@@ -5,6 +5,9 @@ import {useState, useEffect} from 'react';
 import axios from 'axios';
 import Application from './Application';
 import AddApplication from './AddApplication';
+import {Link} from 'react-router-dom';
+
+const moment = require('moment');
 
 export default function Dashboard(props) {
 
@@ -80,6 +83,22 @@ export default function Dashboard(props) {
                 filteredApplicationsArr.push(application);
         })
 
+        // Sort the applications by date descending)
+        switch(document.getElementById("sortSelect").value){
+            case "Date (Descending)":
+                filteredApplicationsArr.sort((a, b) => {
+                    return moment(b.appliedDate).format("YYYYMMDD") - moment(a.appliedDate).format("YYYYMMDD")});
+                    break;
+            case "Date (Ascending)":
+                filteredApplicationsArr.sort((a, b) => {
+                    return moment(a.appliedDate).format("YYYYMMDD") - moment(b.appliedDate).format("YYYYMMDD")});
+                    break;
+            default:
+                filteredApplicationsArr.sort((a, b) => {
+                    return moment(a.appliedDate).format("YYYYMMDD") - moment(b.appliedDate).format("YYYYMMDD")});
+                    break;
+                }
+
         setFilteredApplications(filteredApplicationsArr);
         setFilters(filtersCopy);
     }
@@ -113,32 +132,38 @@ export default function Dashboard(props) {
         <div className="dashboard">
         {isAddingApplication ? <AddApplication getApplications={getApplications} toggleAdding={toggleAddingApplication} /> : null}
             <div className="dashboardBody">
-            <header>
-                <h1 className="title" style={{float:'left', display:'inline-block'}}>AppTracker</h1>
+            <header >
+                <h1 className="title" style={{justifySelf:'start'}}>AppTracker</h1><h5 onClick={props.logout} style={{justifySelf: 'end'}}><Link to="/">Logout</Link></h5>
             </header>
                 <div className="dashboardFilter">
                     <h1>Filter: </h1>
                         <input className="FilterTextBox" name="filter" id="filter" placeholder="Company Name/Position" onChange={()=>{setFilterText(document.getElementsByClassName("FilterTextBox")[0].value);}}></input> <br />
                         <input type="checkbox" id="applicationSent" name="applicationSent" value="applicationSent" onChange={updateFilters}/>
-                        <label for="applicationSent">Application Sent</label>
+                        <label>Application Sent</label>
                         <br />
                         <input type="checkbox" id="inCommunication" name="inCommunication" value="inCommunication" onChange={updateFilters}/>
-                        <label for="inCommunication">In Communication</label>
+                        <label>In Communication</label>
                         <br />
                         <input type="checkbox" id="interviewScheduled" name="interviewScheduled" value="interviewScheduled" onChange={updateFilters}/>
-                        <label for="interviewScheduled">Interview Scheduled</label>
+                        <label>Interview Scheduled</label>
                         <br />
                         <input type="checkbox" id="pendingResponse" name="pendingResponse" value="pendingResponse" onChange={updateFilters}/>
-                        <label for="pendingResponse">Pending Response</label>
+                        <label>Pending Response</label>
                         <br />
                         <input type="checkbox" id="jobOffered" name="jobOffered" value="jobOffered" onChange={updateFilters}/>
-                        <label for="jobOffered">Job Offered</label>
+                        <label>Job Offered</label>
                         <br />
                         <input type="checkbox" id="jobAccepted" name="jobAccepted" value="jobAccepted" onChange={updateFilters}/>
-                        <label for="jobAccepted">Job Accepted</label>
+                        <label>Job Accepted</label>
                         <br />
                         <input type="checkbox" id="jobRejected" name="jobRejected" value="jobRejected" onChange={updateFilters}/>
-                        <label for="jobRejected">Job Rejected</label>
+                        <label>Job Rejected</label>
+                        <br />
+                        <label>Sort: </label>
+                        <select id="sortSelect" name="sortSelect" onChange={updateFilters}>
+                            <option>Date (Descending)</option>
+                            <option>Date (Ascending)</option>
+                        </select>
                     </div>
                 <div className="dashboardApplications">
                     <h1 style={{display: 'inline-block'}}>Applications ({(filters.applicationSent || filters.inCommunication || filters.interviewScheduled || filters.jobAccepted || filters.jobOffered || filters.jobRejected || filters.pendingResponse) ? filteredApplications.length : applications.length})</h1><button onClick={toggleAddingApplication} className="btn_addApplication" style={{display:'inline-block'}}>+</button>
