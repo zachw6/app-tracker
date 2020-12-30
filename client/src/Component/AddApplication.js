@@ -30,9 +30,11 @@ export default function AddApplication(props) {
 
     const checkInterviewScheduled = () => {
         if(document.getElementById('status').value === "Interview Scheduled"){
-            document.getElementsByClassName('interviewSchedule')[0].style.display = "inline-block";
+            document.getElementsByClassName('interviewSchedule')[0].style.display = "block";
+            document.getElementsByClassName('notesDocsContainer')[0].style.height = "15em";
         } else {
             document.getElementsByClassName('interviewSchedule')[0].style.display = "none";
+            document.getElementsByClassName('notesDocsContainer')[0].style.height = "10.3em";
         }
     }
 
@@ -86,56 +88,74 @@ export default function AddApplication(props) {
     }
 
     return (
-        <div className="addApplication" style={{width: '100vw', height: '100vh', backgroundColor: 'rgba(0,0,0,0.5)', display:'flex', justifyContent: 'center', alignItems: 'center', position:'absolute'}}>
-            <div style={{width: '80%', height: '80%', backgroundColor: '#f0f0f0', borderRadius: '15px', position: 'relative'}}>
-                <button onClick={props.toggleAdding} style={{position: 'absolute', top: '10px', right: '20px', border: 'none', outline: 'none', fontSize: '36px', color: '#e33b32'}}>&#10006;</button>
-                <div style={{margin: '20px'}}>
-                    <h2 style={{color: '#101010', fontSize: '30px'}}>Add Application</h2>
-                    <form onSubmit={createApplication}>
-                        <h3 className="addApplicationTitle">Company Name*: </h3> <input required type="text" name="companyName" id="companyName"></input><br />
-                        <h3 className="addApplicationTitle">Position*: </h3><input required type="text" name="position" id="position"></input><br />
-                        <h3 className="addApplicationTitle">Applied*: </h3><div style={{display: 'inline-flex'}}><DatePicker required selected={appliedDate} onChange={date => setAppliedDate(date)} /></div><br />
-                        
-                        <h3 className="addApplicationTitle">Status*: </h3>
-                        <select required onChange={checkInterviewScheduled} name="status" id="status">
-                        <option value="Application Sent">Application Sent</option>
-                        <option value="In Communication">In Communication</option>
-                        <option value="Interview Scheduled">Interview Scheduled</option>
-                        <option value="Pending Response">Pending Response</option>
-                        <option value="Job Offer">Job Offered</option>
-                        <option value="Job Accepted">Job Accepted</option>
-                        <option value="Rejected">Rejected</option>
-                        </select><span className="interviewSchedule">Date/Time: <DatePicker selected={interviewTime} onChange={date => setInterviewTime(date)} showTimeSelect dateFormat="Pp" timeFormat="p" /></span><br />
-                        <h3 className="addApplicationTitle">Interviewer: </h3><input type="text" name="interviewer" id="interviewer"></input><br />
-                        <h3 className="addApplicationTitle">Follow-Up: </h3>
-                        <select required name="followUp" id="followUp">
-                        <option value="false">Incomplete</option>
-                        <option value="true">Complete</option>
-                        </select><br />
+        <div className="addApplication" style={{width: '100%', height: '100vh', backgroundColor: 'rgba(0,0,0,0.5)', display:'flex', justifyContent: 'center', alignItems: 'center', position:'absolute'}}>
+            <div style={{width: '60%', height: '70%', backgroundColor: '#f0f0f0', position: 'relative'}}>
+                <div className="addApplicationHeader"><h2>Add Application</h2><button onClick={props.toggleAdding}>&#10006;</button></div>
+                    <form className="addApplicationForm" onSubmit={createApplication}>
+                        <div className="formContainer">
+                            {/* Right side of form */ }
+                            <div className="leftSideForm">
+                                <h3 className="addApplicationTitle">Company Name <span style={{color: '#fb2424', fontSize:'0.6em'}}>(REQUIRED)</span></h3><input required type="text" name="companyName" id="companyName"></input><br />
+                                <h3 className="addApplicationTitle">Position <span style={{color: '#fb2424', fontSize:'0.6em'}}>(REQUIRED)</span></h3><input required type="text" name="position" id="position"></input><br />
+                                <h3 className="addApplicationTitle">Applied <span style={{color: '#fb2424', fontSize:'0.6em'}}>(REQUIRED)</span></h3><div style={{width: '100%'}}><DatePicker required selected={appliedDate} onChange={date => setAppliedDate(date)} /></div>
+                                
+                                <h3 className="addApplicationTitle">Status <span style={{color: '#fb2424', fontSize:'0.6em'}}>(REQUIRED)</span></h3>
+                                    <div className="addApplicationSelect"><select required className="addApplicationSelect" onChange={checkInterviewScheduled} name="status" id="status">
+                                        <option value="Application Sent">Application Sent</option>
+                                        <option value="In Communication">In Communication</option>
+                                        <option value="Interview Scheduled">Interview Scheduled</option>
+                                        <option value="Pending Response">Pending Response</option>
+                                        <option value="Job Offer">Job Offered</option>
+                                        <option value="Job Accepted">Job Accepted</option>
+                                        <option value="Rejected">Rejected</option>
+                                    </select></div>
 
-                        <h3 className="addApplicationTitle">Documents Submitted: </h3>
-                        <select required name="submittedDocument" id="submittedDocument">
-                        <option value="Resume">Resume</option>
-                        <option value="Cover Letter">Cover Letter</option>
-                        <option value="Transcript">Transcript</option>
-                        <option value="Portfolio">Portfolio</option>
-                        <option value="Letters of Recommendation">Letters of Recommendation</option>
-                        <option value="References List">References List</option>
-                        <option value="Other">Other</option>
-                        </select> <button type="button" onClick={addSubmittedDocument}>Add Document</button> <br />
-                        { documentsSubmitted.map((doc, index) => {
-                            return <div><li key = {index}>{doc}</li><button type="button" onClick={(e) => { removeDocumentElement(e, doc) }}>Remove Document</button></div>
-                        }) }
-                        <br />
+                                <div className="interviewSchedule">
+                                    <h3 className="addApplicationTitle">Interview Date/Time</h3>
+                                    <div style={{width: '100%'}}><DatePicker selected={interviewTime} onChange={date => setInterviewTime(date)} showTimeSelect dateFormat="Pp" timeFormat="p" /></div></div>
+                                <h3 className="addApplicationTitle">Interviewer: </h3><input type="text" name="interviewer" id="interviewer"></input>
+                                <h3 className="addApplicationTitle">Follow-Up: </h3>
+                                <div className="addApplicationSelect"><select required name="followUp" id="followUp">
+                                    <option value="false">Incomplete</option>
+                                    <option value="true">Complete</option>
+                                </select></div>
+                                <br />
+                            </div>
 
-                        <h3 className="addApplicationTitle">Notes: </h3><input type="text" name="note" id="note"></input><br />
-                        <button type="button" onClick= { addNote } >Add Note</button>
-                        { notes.map((note, index) => {
-                            return <div><li key = {index}>{note}</li><button type="button" onClick={(e) => { removeNoteElement(e, note) }}>Remove Note</button></div>
-                        }) }
-                        <input type="submit" name="Submit" />
+                            {/* Left side of form */ }
+                            <div className="rightSideForm">
+                                <h3 className="addApplicationTitle">Documents Submitted: </h3>
+                                <div className="addApplicationSelect"><select required name="submittedDocument" id="submittedDocument">
+                                    <option value="Resume">Resume</option>
+                                    <option value="Cover Letter">Cover Letter</option>
+                                    <option value="Transcript">Transcript</option>
+                                    <option value="Portfolio">Portfolio</option>
+                                    <option value="Letters of Recommendation">Letters of Recommendation</option>
+                                    <option value="References List">References List</option>
+                                    <option value="Other">Other</option>
+                                </select> </div>
+                                <button type="button" onClick={addSubmittedDocument}>Add Document</button> <br />
+                                
+                                <h3 className="addApplicationTitle">Notes: </h3><textarea style={{}} type="text" name="note" id="note"></textarea><br />
+                                <button type="button" onClick= { addNote } >Add Note</button>
+
+                                <div className="notesDocsContainer">
+                                    {documentsSubmitted.length > 0 ? <h4>Submitted Documents</h4> : null }
+                                    { documentsSubmitted.map((doc, index) => {
+                                    return <div><li key = {index}>{index + 1}) {doc} <button type="button" onClick={(e) => { removeDocumentElement(e, doc) }}>&#10006;</button></li></div>
+                                }) }
+                                    {notes.length > 0 && documentsSubmitted.length > 0 ? <div style={{marginBottom: '10px'}}></div> : null}
+                                    {notes.length > 0 ? <h4>Notes</h4> : null }
+                                    { notes.map((note, index) => {
+                                    return <div><li key = {index}>{index + 1}) {note} <button type="button" onClick={(e) => { removeNoteElement(e, note) }}>&#10006;</button></li></div>
+                                }) }
+                                </div>
+                            </div>
+                            
+                            <br />
+                        </div>
+                        <input type="submit" name="Submit" value="Create Application"/>
                     </form>
-                </div>
             </div>
         </div>
     )
