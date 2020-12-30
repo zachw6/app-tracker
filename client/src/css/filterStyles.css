@@ -1,0 +1,14 @@
+.FilterTextBox {
+  box-sizing: border-box;
+  padding: 0.6em 0.3em 0.6em 0.5em;
+  display: inline-block;
+  border-radius: 6px;
+  outline: none;
+  border: 1px solid black;
+  background-color: white;
+  width: 95%;
+}
+
+.dashboardFilter label {
+  color: #101010;
+}
