@@ -1,8 +1,7 @@
 import './index.css';
 import Dashboard from './Component/Dashboard'
-import Unauthorized from './Component/Unauthorized'
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import React from 'react';
 import Login from './Component/Login';
 import {useState, useEffect} from 'react';
@@ -70,7 +69,7 @@ function App() {
         </div>
       </Route>
       <Route exact={true} path="/dashboard">
-        {login ? <Dashboard logout={logOut} /> : <Unauthorized />}
+        {login ? <Dashboard logout={logOut} /> : <Redirect to="/" />}
       </Route>
     </Router>
   );

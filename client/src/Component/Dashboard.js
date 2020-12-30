@@ -67,21 +67,36 @@ export default function Dashboard(props) {
         }
         
         applications.forEach((application) => {
-            if(filtersCopy.applicationSent && application.status === "Application Sent")
-                filteredApplicationsArr.push(application);
-            if(filtersCopy.inCommunication && application.status === "In Communication")
-                filteredApplicationsArr.push(application);
-            if(filtersCopy.interviewScheduled && application.status === "Interview Scheduled")
-                filteredApplicationsArr.push(application);
-            if(filtersCopy.pendingResponse && application.status === "Pending Response")
-                filteredApplicationsArr.push(application);
-            if(filtersCopy.jobOffered && application.status === "Job Offered")
-                filteredApplicationsArr.push(application);
-            if(filtersCopy.jobAccepted && application.status === "Job Accepted")
-                filteredApplicationsArr.push(application);
-            if(filtersCopy.jobRejected && application.status === "Job Rejected")
-                filteredApplicationsArr.push(application);
-        })
+            // if(!filtersCopy.applicationSent && !filtersCopy.inCommunication && !filtersCopy.interviewScheduled && !filtersCopy.pendingResponse && !filtersCopy.jobOffered && !filtersCopy.jobAccepted && !filtersCopy.jobRejected)
+
+            
+            if((application.companyName.toLowerCase().includes(filterText.toLowerCase()) || application.position.toLowerCase().includes(filterText.toLowerCase()) || filterText.toLowerCase().includes(application.companyName.toLowerCase()) || filterText.toLowerCase().includes(application.position.toLowerCase()))){
+                if(filtersCopy.applicationSent && application.status === "Application Sent")
+                    filteredApplicationsArr.push(application);
+                if(filtersCopy.inCommunication && application.status === "In Communication")
+                    filteredApplicationsArr.push(application);
+                if(filtersCopy.interviewScheduled && application.status === "Interview Scheduled")
+                    filteredApplicationsArr.push(application);
+                if(filtersCopy.pendingResponse && application.status === "Pending Response")
+                    filteredApplicationsArr.push(application);
+                if(filtersCopy.jobOffered && application.status === "Job Offered")
+                    filteredApplicationsArr.push(application);
+                if(filtersCopy.jobAccepted && application.status === "Job Accepted")
+                    filteredApplicationsArr.push(application);
+                if(filtersCopy.jobRejected && application.status === "Job Rejected")
+                    filteredApplicationsArr.push(application);
+            }
+        });
+
+        if(!filtersCopy.applicationSent && !filtersCopy.inCommunication && !filtersCopy.interviewScheduled && !filtersCopy.pendingResponse && !filtersCopy.jobOffered && !filtersCopy.jobRejected && !filtersCopy.jobAccepted){
+           if(filterText.length === 0){
+                filteredApplicationsArr = [...applications];
+           }
+            applications.forEach((application) => {
+                if(filterText.length > 0 && (application.companyName.toLowerCase().includes(filterText.toLowerCase()) || application.position.toLowerCase().includes(filterText.toLowerCase()) || filterText.toLowerCase().includes(application.companyName.toLowerCase()) || filterText.toLowerCase().includes(application.position.toLowerCase())))
+                    filteredApplicationsArr.push(application);
+            });
+        }
 
         // Sort the applications by date descending)
         switch(document.getElementById("sortSelect").value){
@@ -117,23 +132,25 @@ export default function Dashboard(props) {
         }
         setApplicationIndex(updateIndex);
         setApplications(newApplications);
+        setFilteredApplications(newApplications);
         setApplicationLoaded(true);
-      });
-      }
+    });
+}
 
-      const toggleAddingApplication = () => {
-        setIsAddingApplication(!isAddingApplication);
-      }
+const toggleAddingApplication = () => {
+    setIsAddingApplication(!isAddingApplication);
+}
 
-      // eslint-disable-next-line
-      useEffect(getApplications, []);
+// eslint-disable-next-line
+useEffect(getApplications, []);
+useEffect(updateFilters,[filteredApplications, updateFilters]);
 
     return (
         <div className="dashboard">
         {isAddingApplication ? <AddApplication getApplications={getApplications} toggleAdding={toggleAddingApplication} /> : null}
             <div className="dashboardBody">
             <header >
-                <h1 className="title" style={{justifySelf:'start'}}>AppTracker</h1><h5 onClick={props.logout} style={{justifySelf: 'end'}}><Link to="/">Logout</Link></h5>
+                <h1 className="title">AppTracker</h1><h5 onClick={props.logout} ><Link to="/">Logout</Link></h5>
             </header>
                 <div className="dashboardFilter">
                     <h1>Filter: </h1>
@@ -166,17 +183,10 @@ export default function Dashboard(props) {
                         </select>
                     </div>
                 <div className="dashboardApplications">
-                    <h1 style={{display: 'inline-block'}}>Applications ({(filters.applicationSent || filters.inCommunication || filters.interviewScheduled || filters.jobAccepted || filters.jobOffered || filters.jobRejected || filters.pendingResponse) ? filteredApplications.length : applications.length})</h1><button onClick={toggleAddingApplication} className="btn_addApplication" style={{display:'inline-block'}}>+</button>
-                    {applicationLoaded ? 
-                    (filters.applicationSent || filters.inCommunication || filters.interviewScheduled || filters.jobAccepted || filters.jobOffered || filters.jobRejected || filters.pendingResponse ? filteredApplications.map( (application) => {
-                        if((application.companyName.toLowerCase().includes(filterText.toLowerCase()) || application.position.toLowerCase().includes(filterText.toLowerCase()) || filterText.toLowerCase().includes(application.companyName.toLowerCase()) || filterText.toLowerCase().includes(application.position.toLowerCase()))){
-                            return <Application key={application._id} companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted} interviewTime={application.interviewTime}/>
-                        } else { return null; }
-                    }): applications.map((application => {
-                            if((application.companyName.toLowerCase().includes(filterText.toLowerCase()) || application.position.toLowerCase().includes(filterText.toLowerCase()) || filterText.toLowerCase().includes(application.companyName.toLowerCase()) || filterText.toLowerCase().includes(application.position.toLowerCase()))){
-                                return <Application key={application._id} companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted} interviewTime={application.interviewTime}/>
-                            } else { return null; }
-                    }))) : <p style={{color: 'black'}}>Not logged in.</p>}
+                    <h1 style={{display: 'inline-block'}}>Applications ({filteredApplications.length})</h1><button onClick={toggleAddingApplication} className="btn_addApplication" style={{display:'inline-block'}}>+</button>
+                    {applicationLoaded ? filteredApplications.map((application => {
+                                return <Application key={application._id} companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted} interviewTime={application.interviewTime}/>     
+                    })) : <p style={{color: 'black'}}>Not logged in.</p>}
                 </div>
             </div>
         </div>

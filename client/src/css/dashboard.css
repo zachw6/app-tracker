@@ -40,24 +40,37 @@ input {
 }
 
 header {
-  display: block;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  align-items: center;
   color: white;
   background-color: #008cff;
   grid-column-start: 1;
   grid-column-end: 5;
-  grid-row-start: 1;
-  grid-row-end: 2;
 }
 
 .dashboard h1.title {
   color: white;
   font-size: 3vh;
-  margin: 5px 2vw;
+  margin-left: 2vw;
+  grid-column-start: 1;
 }
 
-.dashboard h2.settingsTitle {
+.dashboard h5 {
+  font-size: 2vh;
+  justify-self: end;
+  margin-right: 2vw;
+  grid-column-start: 2;
+}
+
+.dashboard h5 a {
   color: white;
-  margin: 5px 2vw;
+  text-decoration: none;
+}
+
+.dashboard h5 a:hover {
+  color: #ff443a !important;
 }
 
 .dashboard {
