@@ -28,6 +28,7 @@ input {
   grid-row-end: 3;
 }
 
+
 .dashboardApplications {
   max-height: 100%;
   overflow-y: scroll;
@@ -83,8 +84,15 @@ header {
   color: black;
 }
 
-button.btn_addApplication {
-  height: 2em;
+.applicationsHeader {
+  height: 3em;
+  display: flex;
+  align-items: center;
+}
+
+button.btn_addApplication,
+button.btn_editMode {
+  height: 100%;
   width: 2em;
   margin-left: 1em;
   border-radius: 0px;
@@ -96,8 +104,39 @@ button.btn_addApplication {
 }
 
 button.btn_addApplication:hover,
-button.btn_addApplication:focus {
+button.btn_addApplication:focus,
+button.btn_editMode:hover,
+button.btn_editMode:focus {
   background-color: #dddddd;
+}
+
+button.btn_editMode {
+  box-sizing: border-box;
+  border-bottom: 3px solid red;
+  width: auto;
+  font-size: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.editModeButtons {
+  margin-bottom: 1em;
+}
+
+.editModeButtons button{
+  height: 1.8em;
+  width: 1.8em;
+  margin-right: 1em;
+  border-radius: 0px;
+  border: none;
+  font-size: 1.75em;
+  outline: none;
+  cursor: pointer;
+}
+
+.editModeButtons .delete button {
+  background-color: #ff443a !important;
+  color: white !important;
 }
 
 .applicationContainer {
@@ -105,13 +144,6 @@ button.btn_addApplication:focus {
   background-color: #008cff;
   position: relative;
   width: 90%;
-  margin-top: 30px;
-}
-
-.applicationContainer:last-of-type {
-  background-color: #008cff;
-  width: 90%;
-  margin: 30px 0px;
 }
 
 .applicationHeader {

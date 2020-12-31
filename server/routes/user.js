@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const mongoose = require("mongoose");
 const {OAuth2Client} = require('google-auth-library');
 const router = express.Router();
+const ObjectId = require('mongodb').ObjectID;
 
 const User = require("../models/user");
 const Application = require("../models/application");
@@ -21,6 +22,26 @@ router.post("/applications", (req, res) => {
         });
         } else {
             res.status(401).json({access: 'denied'});
+        }
+    })
+});
+
+router.post("/applications/remove",  (req, res) => {
+    var token = req.body.token;
+    jwt.verify(token, process.env.JWT_SIGNIN_KEY, (err, decoded) => {
+        if(!err) {
+            const {_id} = decoded;
+            const removeId = req.body.removeId;
+            User.updateOne({_id: new ObjectId(_id)},
+                {$pull: {applications: { _id: new ObjectId(removeId)}}}
+            ).exec().then(() => {
+                res.status(200).json({
+                    access: 'granted',
+                    status: 'Success'    
+                })
+            });
+        } else {
+            res.status(401).json({access: 'denied'})
         }
     })
 });

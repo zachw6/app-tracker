@@ -26,6 +26,7 @@ export default function Dashboard(props) {
         jobAccepted: false,
         jobRejected: false
     });
+    const [editMode, setEditMode] = useState(false);
 
     const updateFilters = () => {
         let filtersCopy = Object.assign({}, filters);
@@ -110,9 +111,17 @@ export default function Dashboard(props) {
                     return moment(a.appliedDate).format("YYYYMMDD") - moment(b.appliedDate).format("YYYYMMDD")});
                     break;
                 }
-
+        
         setFilteredApplications(filteredApplicationsArr);
-        setFilters(filtersCopy);
+        if(filters.applicationSent !== filtersCopy.applicationSent ||
+            filters.inCommunication !== filtersCopy.inCommunication ||
+            filters.interviewScheduled !== filtersCopy.interviewScheduled ||
+            filters.jobAccepted !== filtersCopy.jobAccepted ||
+            filters.jobOffered !== filtersCopy.jobOffered ||
+            filters.jobRejected !== filtersCopy.jobRejected ||
+            filters.pendingResponse !== filtersCopy.pendingResponse){
+            setFilters(filtersCopy);
+        }
     }
 
     const getApplications = () => {
@@ -134,13 +143,52 @@ export default function Dashboard(props) {
     });
 }
 
+const removeApplication = (e, id) => {
+    axios({
+        method: "POST",
+        url: "http://localhost:5000/user/applications/remove",
+        data: {
+            token: sessionStorage.getItem('loginToken'),
+            removeId: id
+            }
+    }).then(res => {
+        console.log(res);
+        if(res.data.status === "Success"){
+            let applicationsCopy = [...applications];
+            let updatedApplications = [...filteredApplications];
+            for(let i = 0; i < updatedApplications.length; i++){
+                if(updatedApplications[i]._id === id)
+                    updatedApplications.splice(i, 1);
+            }
+            for(let i = 0; i < applicationsCopy.length; i++){
+                if(applicationsCopy[i]._id === id)
+                    applicationsCopy.splice(i, 1);
+            }
+            setApplicationIndex(applicationIndex - 1);
+            setApplications(applicationsCopy);
+            updateFilters();
+            setFilteredApplications(updatedApplications);
+        } else {
+            console.error("There was an error removing the application.")
+        }
+    })
+}
+
 const toggleAddingApplication = () => {
     setIsAddingApplication(!isAddingApplication);
 }
 
+const toggleEditMode = () => {
+    if(!editMode === true)
+        document.getElementsByClassName("btn_editMode")[0].style.borderBottom = "3px solid green";
+    else
+        document.getElementsByClassName("btn_editMode")[0].style.borderBottom = "3px solid red";
+    setEditMode(!editMode);
+}
+
 // eslint-disable-next-line
 useEffect(getApplications, []);
-useEffect(updateFilters,[filteredApplications, updateFilters]);
+useEffect(updateFilters, [filterText, filters]);
 
     return (
         <div className="dashboard">
@@ -182,9 +230,28 @@ useEffect(updateFilters,[filteredApplications, updateFilters]);
                         </select></div>
                     </div>
                 <div className="dashboardApplications">
-                    <h1 style={{display: 'inline-block'}}>Applications ({filteredApplications.length})</h1><button onClick={toggleAddingApplication} className="btn_addApplication" style={{display:'inline-block'}}>+</button>
+                    <div className="applicationsHeader"><h1 style={{display: 'inline-block'}}>Applications ({filteredApplications.length})</h1><button onClick={toggleAddingApplication} className="btn_addApplication" style={{display:'inline-block'}}>+</button><button onClick={toggleEditMode} className="btn_editMode" style={{display:'inline-block'}}>Edit Mode</button></div>
                     {applicationLoaded ? filteredApplications.map((application => {
-                                return <Application key={application._id} companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted} interviewTime={application.interviewTime}/>     
+                                if(!editMode)
+                                    return <div key={application._id} style={{marginTop:'30px'}}><Application companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted} interviewTime={application.interviewTime}/></div>
+                                else
+                                    return <div key={application._id} style={{marginTop:'30px'}}>
+                                                <div className="editModeButtons">
+                                                    <button>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                                        </svg>
+                                                    </button>
+                                                    <span className="delete"><button onClick={(e) => removeApplication(e, application._id)}>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                                        </svg>
+                                                    </button>
+                                                    </span>
+                                                </div>
+                                                <Application companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted} interviewTime={application.interviewTime}/>
+                                            </div>
                     })) : <p style={{color: 'black'}}>Not logged in.</p>}
                 </div>
             </div>
