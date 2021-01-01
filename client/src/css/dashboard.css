@@ -132,11 +132,23 @@ button.btn_editMode {
   font-size: 1.75em;
   outline: none;
   cursor: pointer;
+  transition: all 0.2s;
+}
+
+.editModeButtons button:hover,
+.editModeButtons button:active {
+  background-color: #dddddd;
 }
 
 .editModeButtons .delete button {
-  background-color: #ff443a !important;
+  background-color: #ff443a;
   color: white !important;
+  transition: all 0.2s;
+}
+
+.editModeButtons .delete button:hover,
+.editModeButtons .delete button:active {
+  background-color: #df3931;
 }
 
 .applicationContainer {

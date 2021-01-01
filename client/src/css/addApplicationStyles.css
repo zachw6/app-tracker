@@ -160,7 +160,7 @@ h3.addApplicationTitle {
   clip-path: polygon(100% 0%, 0 0%, 50% 100%);
 }
 
-.addApplication button {
+.addApplication button.blueButton {
   margin-top: 10px;
   padding: 5px 10px;
   border-radius: 6px;

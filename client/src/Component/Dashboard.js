@@ -5,6 +5,7 @@ import {useState, useEffect} from 'react';
 import axios from 'axios';
 import Application from './Application';
 import AddApplication from './AddApplication';
+import EditApplication from './EditApplication';
 import {Link} from 'react-router-dom';
 
 const moment = require('moment');
@@ -14,6 +15,7 @@ export default function Dashboard(props) {
     const [applicationLoaded, setApplicationLoaded] = useState(false);
     const [applications, setApplications] = useState([]);
     const [isAddingApplication, setIsAddingApplication] = useState(false);
+    const [isUpdatingApplication, setIsUpdatingApplication] = useState(false);
     const [applicationIndex, setApplicationIndex] = useState(0);
     const [filteredApplications, setFilteredApplications] = useState([]);
     const [filterText, setFilterText] = useState("");
@@ -27,6 +29,7 @@ export default function Dashboard(props) {
         jobRejected: false
     });
     const [editMode, setEditMode] = useState(false);
+    const [updateApplicationDetails, setUpdateApplicationDetails] = useState({});
 
     const updateFilters = () => {
         let filtersCopy = Object.assign({}, filters);
@@ -152,7 +155,6 @@ const removeApplication = (e, id) => {
             removeId: id
             }
     }).then(res => {
-        console.log(res);
         if(res.data.status === "Success"){
             let applicationsCopy = [...applications];
             let updatedApplications = [...filteredApplications];
@@ -178,6 +180,26 @@ const toggleAddingApplication = () => {
     setIsAddingApplication(!isAddingApplication);
 }
 
+const toggleEditingApplication = () => {
+    setIsUpdatingApplication(!isUpdatingApplication);
+}
+
+const startUpdatingApplication = (e, applicationId, appliedDate, companyName, position, interviewer, status, interviewTime, followUp, documentsSubmitted, notes) => {
+    setUpdateApplicationDetails({
+        applicationId,
+        appliedDate,
+        companyName,
+        position,
+        interviewer,
+        status,
+        interviewTime,
+        followUp,
+        documentsSubmitted,
+        notes
+    });
+    toggleEditingApplication();
+}
+
 const toggleEditMode = () => {
     if(!editMode === true)
         document.getElementsByClassName("btn_editMode")[0].style.borderBottom = "3px solid green";
@@ -186,13 +208,33 @@ const toggleEditMode = () => {
     setEditMode(!editMode);
 }
 
+const updateEditedApplications = (applicationId, appliedDate, companyName, position, interviewer, status, interviewTime, followUp, documentsSubmitted, notes) => {
+    let applicationsCopy = [...applications];
+    for(let i = 0; i < applicationsCopy.length; i++){
+        if(applicationsCopy[i]._id === applicationId){
+            applicationsCopy[i].appliedDate = appliedDate;
+            applicationsCopy[i].companyName = companyName;
+            applicationsCopy[i].position = position;
+            applicationsCopy[i].interviewer = interviewer;
+            applicationsCopy[i].status = status;
+            applicationsCopy[i].interviewTime = interviewTime;
+            applicationsCopy[i].followUp = followUp;
+            applicationsCopy[i].documentsSubmitted = documentsSubmitted;
+            applicationsCopy[i].notes = notes;
+        }
+    }
+    setApplications(applicationsCopy);
+    updateFilters();
+}
+
 // eslint-disable-next-line
 useEffect(getApplications, []);
-useEffect(updateFilters, [filterText, filters]);
+useEffect(updateFilters, [filterText, filters, applications]);
 
     return (
         <div className="dashboard">
         {isAddingApplication ? <AddApplication getApplications={getApplications} toggleAdding={toggleAddingApplication} /> : null}
+        {isUpdatingApplication ? <EditApplication applicationId={ updateApplicationDetails.applicationId } getApplications={getApplications} toggleEditing={toggleEditingApplication} appliedDate={updateApplicationDetails.appliedDate} companyName={updateApplicationDetails.companyName} position={updateApplicationDetails.position} interviewer={updateApplicationDetails.interviewer} status={updateApplicationDetails.status} interviewTime={updateApplicationDetails.interviewTime} followUp={updateApplicationDetails.followUp} documentsSubmitted={updateApplicationDetails.documentsSubmitted} notes={updateApplicationDetails.notes} updateEditedApplication={updateEditedApplications}/> : null}
             <div className="dashboardBody">
             <header >
                 <h1 className="title">AppTracker</h1><h5 onClick={props.logout} ><Link to="/">Logout</Link></h5>
@@ -233,11 +275,11 @@ useEffect(updateFilters, [filterText, filters]);
                     <div className="applicationsHeader"><h1 style={{display: 'inline-block'}}>Applications ({filteredApplications.length})</h1><button onClick={toggleAddingApplication} className="btn_addApplication" style={{display:'inline-block'}}>+</button><button onClick={toggleEditMode} className="btn_editMode" style={{display:'inline-block'}}>Edit Mode</button></div>
                     {applicationLoaded ? filteredApplications.map((application => {
                                 if(!editMode)
-                                    return <div key={application._id} style={{marginTop:'30px'}}><Application companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted} interviewTime={application.interviewTime}/></div>
+                                    return <div key={application._id} style={{marginTop:'30px'}}><Application companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted} interviewTime={new Date()}/></div>
                                 else
                                     return <div key={application._id} style={{marginTop:'30px'}}>
                                                 <div className="editModeButtons">
-                                                    <button>
+                                                    <button onClick={(e) => { startUpdatingApplication(e, application._id, application.appliedDate, application.companyName, application.position, application.interviewer, application.status, application.interviewTime, application.followUp, application.documentsSubmitted, application.notes) }}>
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                                                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
                                                         </svg>

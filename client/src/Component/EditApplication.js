@@ -4,14 +4,28 @@ import '../css/addApplicationStyles.css'
 import axios from 'axios';
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css';
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 
-export default function AddApplication(props) {
+export default function EditApplication(props) {
 
-    const [appliedDate, setAppliedDate] = useState(new Date());
-    const [interviewTime, setInterviewTime] = useState(new Date());
+    const moment = require('moment');
+
+    const [appliedDate, setAppliedDate] = useState(moment(props.appliedDate).toDate());
+    const [interviewTime, setInterviewTime] = useState(moment(props.interviewTime).toDate());
     const [documentsSubmitted, setDocumentsSubmitted] = useState([]);
     const [notes, setNotes] = useState([]);
+
+    useEffect( () => {
+        let documentsSubmittedCopy = [];
+        let notesCopy = [];
+        for(let i = 0; i < props.documentsSubmitted.length; i++)
+            documentsSubmittedCopy.push(props.documentsSubmitted[i]);
+        for(let i = 0; i < props.notes.length; i++)
+            notesCopy.push(props.notes[i]);
+        setDocumentsSubmitted(documentsSubmittedCopy);
+        setNotes(notesCopy);
+        checkInterviewScheduled();
+    }, [])
 
     const addSubmittedDocument = () => {
         let documentsSubmittedCopy = [...documentsSubmitted];
@@ -61,14 +75,15 @@ export default function AddApplication(props) {
         }
     }
 
-    const createApplication = (event) => {
+    const updateApplication = (event) => {
         event.preventDefault();
         axios({
           method: "POST",
-          url: "http://localhost:5000/user/createApplication",
+          url: "http://localhost:5000/user/updateApplication",
           data: {token: sessionStorage.getItem('loginToken'), 
           appData: 
             {
+            _id: props.applicationId,
             companyName: document.getElementById('companyName').value,
             position: document.getElementById('position').value,
             appliedDate: appliedDate,
@@ -82,26 +97,27 @@ export default function AddApplication(props) {
         }
       }).then(res => {
           if(res.data.access !== "denied"){
-              props.getApplications();
-              props.toggleAdding();
-          }
+            props.updateEditedApplication(props.applicationId, appliedDate, document.getElementById('companyName').value, document.getElementById('position').value, document.getElementById('interviewer').value, document.getElementById('status').value, interviewTime, document.getElementById('followUp').value, documentsSubmitted, notes);
+            props.toggleEditing();
+        }
+          
       });
     }
 
     return (
         <div className="addApplication">
             <div className="addApplicationContainer">
-                <div className="addApplicationHeader"><h2>Add Application</h2><button className="blueButton" onClick={props.toggleAdding}>&#10006;</button></div>
-                    <form className="addApplicationForm" onSubmit={createApplication}>
+                <div className="addApplicationHeader"><h2>Update Application</h2><button className="blueButton" onClick={props.toggleEditing}>&#10006;</button></div>
+                    <form className="addApplicationForm" onSubmit={updateApplication}>
                         <div className="formContainer">
                             {/* Right side of form */ }
                             <div className="leftSideForm">
-                                <h3 className="addApplicationTitle">Company Name <span style={{color: '#fb2424', fontSize:'0.6em'}}>(REQUIRED)</span></h3><input required type="text" name="companyName" id="companyName"></input><br />
-                                <h3 className="addApplicationTitle">Position <span style={{color: '#fb2424', fontSize:'0.6em'}}>(REQUIRED)</span></h3><input required type="text" name="position" id="position"></input><br />
+                                <h3 className="addApplicationTitle">Company Name <span style={{color: '#fb2424', fontSize:'0.6em'}}>(REQUIRED)</span></h3><input required type="text" name="companyName" id="companyName" defaultValue={props.companyName}></input><br />
+                                <h3 className="addApplicationTitle">Position <span style={{color: '#fb2424', fontSize:'0.6em'}}>(REQUIRED)</span></h3><input required type="text" name="position" id="position" defaultValue={props.position}></input><br />
                                 <h3 className="addApplicationTitle">Applied <span style={{color: '#fb2424', fontSize:'0.6em'}}>(REQUIRED)</span></h3><div style={{width: '100%'}}><DatePicker required selected={appliedDate} onChange={date => setAppliedDate(date)} /></div>
                                 
                                 <h3 className="addApplicationTitle">Status <span style={{color: '#fb2424', fontSize:'0.6em'}}>(REQUIRED)</span></h3>
-                                    <div className="addApplicationSelect"><select required className="addApplicationSelect" onChange={checkInterviewScheduled} name="status" id="status">
+                                    <div className="addApplicationSelect"><select required className="addApplicationSelect" onChange={checkInterviewScheduled} name="status" id="status" defaultValue={props.status}>
                                         <option value="Application Sent">Application Sent</option>
                                         <option value="In Communication">In Communication</option>
                                         <option value="Interview Scheduled">Interview Scheduled</option>
@@ -114,9 +130,9 @@ export default function AddApplication(props) {
                                 <div className="interviewSchedule">
                                     <h3 className="addApplicationTitle">Interview Date/Time</h3>
                                     <div style={{width: '100%'}}><DatePicker selected={interviewTime} onChange={date => setInterviewTime(date)} showTimeSelect dateFormat="Pp" timeFormat="p" /></div></div>
-                                <h3 className="addApplicationTitle">Interviewer: </h3><input type="text" name="interviewer" id="interviewer"></input>
+                                <h3 className="addApplicationTitle">Interviewer: </h3><input type="text" name="interviewer" id="interviewer" defaultValue={props.interviewer}></input>
                                 <h3 className="addApplicationTitle">Follow-Up: </h3>
-                                <div className="addApplicationSelect"><select required name="followUp" id="followUp">
+                                <div className="addApplicationSelect"><select required name="followUp" id="followUp" defaultValue={props.followUp}>
                                     <option value="false">Incomplete</option>
                                     <option value="true">Complete</option>
                                 </select></div>
@@ -155,7 +171,7 @@ export default function AddApplication(props) {
                             
                             <br />
                         </div>
-                        <input type="submit" name="Submit" value="Create Application"/>
+                        <input type="submit" name="Submit" value="Update Application"/>
                     </form>
             </div>
         </div>

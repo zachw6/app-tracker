@@ -70,7 +70,39 @@ router.post("/createApplication", (req, res) => {
               if (err) {
                 return res.send(err);
               }
-              return res.status(201).json({message: "Application created on server."});}
+              return res.status(201).json({message: "Application created in database."});}
+              );
+        } else {
+            res.status(401).json({access: 'denied'});
+        }
+    })
+});
+
+router.post("/updateApplication", (req, res) => {
+    var token = req.body.token;
+    jwt.verify(token, process.env.JWT_SIGNIN_KEY, (err, decoded) => {
+        if(!err){
+            const {_id} = decoded;
+            const appData = req.body.appData;
+
+            User.findOneAndUpdate({_id, 'applications._id': new ObjectId(appData._id)}, 
+            {$set: 
+                {
+                    "applications.$.companyName": appData.companyName,
+                    "applications.$.position": appData.position,
+                    "applications.$.appliedDate": appData.appliedDate,
+                    "applications.$.interviewer": appData.interviewer,
+                    "applications.$.status": appData.status,
+                    "applications.$.interviewTime": appData.interviewTime,
+                    "applications.$.followUp": appData.followUp,
+                    "applications.$.documentsSubmitted": appData.documentsSubmitted,
+                    "applications.$.notes": appData.documentsSubmitted
+                }}, { new: true },
+            function (err) {
+              if (err) {
+                return res.send(err);
+              }
+              return res.status(201).json({message: "Application created in database."});}
               );
         } else {
             res.status(401).json({access: 'denied'});
