@@ -173,7 +173,7 @@ h3.addApplicationTitle {
   font-family: Montserrat;
 }
 
-.addApplication button:hover,
+.addApplication button.blueButton:hover,
 .addApplication input[type="submit"]:hover {
   background-color: #007add;
 }
@@ -243,4 +243,52 @@ h3.addApplicationTitle {
   display: none;
   padding-left: 20px;
   border-left: #008cff solid 3px;
+}
+
+@media only screen and (max-width: 875px) {
+
+.addApplicationContainer {
+  width: 100%;
+  height: 100%;
+}
+}
+
+
+@media only screen and (max-width: 535px) {
+  .addApplication .formContainer {
+    width: 100%;
+    height: 100%;
+    display: block;
+    grid-template-columns: 100%;
+    grid-template-areas: "leftSideForm rightSideForm";
+    max-height: 800px;
+    overflow-y: scroll;
+    scrollbar-color: #007add transparent;
+    scrollbar-width: thin;
+  }
+
+
+  .addApplication .leftSideForm,
+  .addApplication .rightSideForm {
+    margin: 0 1.5em;
+  }
+
+
+.addApplication .notesDocsContainer,
+.addApplicationSelect select,
+.addApplication input,
+.addApplication textarea,
+.react-datepicker-ignore-onclickoutside {
+  width: 100% !important;
+}
+
+.addApplication .notesDocsContainer {
+  margin-bottom: 60px;
+}
+
+
+.addApplication input[type="submit"] {
+  position: absolute;
+}
+
 }

@@ -18,6 +18,10 @@ input {
   height: 100%;
 }
 
+.dashboard button.showFilters {
+  display: none;
+}
+
 .dashboardFilter {
   padding-top: 20px;
   padding-left: 2vw;
@@ -203,4 +207,60 @@ button.btn_editMode {
   width: 100%;
   color: white;
   cursor: pointer;
+}
+
+@media only screen and (max-width: 875px) {
+  .dashboardBody {
+    font-size: clamp(0.9vw, 12px, 24px);
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 5vh 5vh 90vh;
+    height: 100%;
+  }
+
+  .dashboard button.showFilters {
+    display: block;
+    z-index: 2;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    width: 100%;
+    border: none;
+    outline: none;
+  }
+
+  .dashboardFilter {
+    height: 0%;
+    max-height: 90vh;
+    overflow: hidden;
+    padding: 0 2vw;
+    background-color: #f0f0f0;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 3;
+    grid-row-end: 4;
+    transition: all 0.4s ease-in-out;
+    z-index: 1;
+  }
+
+  .dashboardApplications {
+      max-height: 100%;
+      overflow-y: scroll;
+      padding-top: 1em;
+      padding-left: 1.5em;
+      padding-bottom: 1.4em;
+      padding-right: 1.5em;
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 3;
+      grid-row-end: 4;
+  }
+  
+  .applicationContainer {
+    box-sizing: border-box;
+    background-color: #008cff;
+    position: relative;
+    width: 100%;
+  }
 }

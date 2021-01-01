@@ -30,7 +30,24 @@ export default function Dashboard(props) {
     });
     const [editMode, setEditMode] = useState(false);
     const [updateApplicationDetails, setUpdateApplicationDetails] = useState({});
+    const [showFilterScreen, setShowFilterScreen] = useState(false);
 
+    
+    const checkWidth = (e) => {
+        if(window.innerWidth >= 874){
+            if(!showFilterScreen) {
+                showFilters();
+            }
+        }
+
+        if(window.innerWidth < 874){
+            if(showFilterScreen) {
+                showFilters();
+            }
+        }
+    }
+    window.addEventListener('resize', checkWidth);
+    
     const updateFilters = () => {
         let filtersCopy = Object.assign({}, filters);
         let filteredApplicationsArr = [];
@@ -208,6 +225,20 @@ const toggleEditMode = () => {
     setEditMode(!editMode);
 }
 
+const showFilters = () => {
+    if(!showFilterScreen){
+        document.getElementsByClassName("showFilters")[0].style.backgroundColor = "#ddd"
+        document.getElementsByClassName("dashboardFilter")[0].style.paddingTop = "1em";
+        document.getElementsByClassName("dashboardFilter")[0].style.height = "100%";
+        setShowFilterScreen(true);
+    } else {
+        document.getElementsByClassName("showFilters")[0].style.backgroundColor = "#f0f0f0"
+        document.getElementsByClassName("dashboardFilter")[0].style.height = "0%";
+        document.getElementsByClassName("dashboardFilter")[0].style.paddingTop = "0em";
+        setShowFilterScreen(false);
+    }
+}
+
 const updateEditedApplications = (applicationId, appliedDate, companyName, position, interviewer, status, interviewTime, followUp, documentsSubmitted, notes) => {
     let applicationsCopy = [...applications];
     for(let i = 0; i < applicationsCopy.length; i++){
@@ -239,6 +270,7 @@ useEffect(updateFilters, [filterText, filters, applications]);
             <header >
                 <h1 className="title">AppTracker</h1><h5 onClick={props.logout} ><Link to="/">Logout</Link></h5>
             </header>
+            <button onClick={showFilters} className="showFilters">{showFilterScreen ? 'Hide Filters' : 'Set Filters'}</button>
                 <div className="dashboardFilter">
                     <h1>Filter: </h1>
                         <input className="FilterTextBox" name="filter" id="filter" placeholder="Company Name/Position" onChange={()=>{setFilterText(document.getElementsByClassName("FilterTextBox")[0].value);}}></input> <br />
