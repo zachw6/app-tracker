@@ -226,12 +226,12 @@ const toggleEditMode = () => {
 }
 
 const showFilters = () => {
-    if(!showFilterScreen){
+    if(window.innerWidth < 875 && !showFilterScreen){
         document.getElementsByClassName("showFilters")[0].style.backgroundColor = "#ddd"
         document.getElementsByClassName("dashboardFilter")[0].style.paddingTop = "1em";
         document.getElementsByClassName("dashboardFilter")[0].style.height = "100%";
         setShowFilterScreen(true);
-    } else {
+    } else if(window.innerWidth < 875 && showFilterScreen) {
         document.getElementsByClassName("showFilters")[0].style.backgroundColor = "#f0f0f0"
         document.getElementsByClassName("dashboardFilter")[0].style.height = "0%";
         document.getElementsByClassName("dashboardFilter")[0].style.paddingTop = "0em";
@@ -259,7 +259,7 @@ const updateEditedApplications = (applicationId, appliedDate, companyName, posit
 }
 
 // eslint-disable-next-line
-useEffect(getApplications, []);
+useEffect(() => { getApplications(); checkWidth();}, []);
 useEffect(updateFilters, [filterText, filters, applications]);
 
     return (
@@ -307,7 +307,16 @@ useEffect(updateFilters, [filterText, filters, applications]);
                     <div className="applicationsHeader"><h1 style={{display: 'inline-block'}}>Applications ({filteredApplications.length})</h1><button onClick={toggleAddingApplication} className="btn_addApplication" style={{display:'inline-block'}}>+</button><button onClick={toggleEditMode} className="btn_editMode" style={{display:'inline-block'}}>Edit Mode</button></div>
                     {applicationLoaded ? filteredApplications.map((application => {
                                 if(!editMode)
-                                    return <div key={application._id} style={{marginTop:'30px'}}><Application companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted} interviewTime={new Date()}/></div>
+                                    return <div key={application._id} style={{marginTop:'30px'}}><Application   companyName={application.companyName}
+                                                                                                                appliedDate={application.appliedDate} 
+                                                                                                                position={application.position} 
+                                                                                                                interviewer={application.interviewer} 
+                                                                                                                status={application.status} 
+                                                                                                                followUp={application.followUp} 
+                                                                                                                documentsSubmitted={application.documentsSubmitted} 
+                                                                                                                notes={application.notes} 
+                                                                                                                interviewTime={new Date()}/>
+                                            </div>
                                 else
                                     return <div key={application._id} style={{marginTop:'30px'}}>
                                                 <div className="editModeButtons">
@@ -324,7 +333,15 @@ useEffect(updateFilters, [filterText, filters, applications]);
                                                     </button>
                                                     </span>
                                                 </div>
-                                                <Application companyName={application.companyName} appliedDate={application.appliedDate} position={application.position} interviewer={application.interviewer} status={application.status} followUp={application.followUp} documentsSubmitted={application.documentsSubmitted} notes={application.documentsSubmitted} interviewTime={application.interviewTime}/>
+                                                <Application    companyName={application.companyName}
+                                                                appliedDate={application.appliedDate}
+                                                                position={application.position}
+                                                                interviewer={application.interviewer}
+                                                                status={application.status}
+                                                                followUp={application.followUp}
+                                                                documentsSubmitted={application.documentsSubmitted}
+                                                                notes={application.notes}
+                                                                interviewTime={application.interviewTime}/>
                                             </div>
                     })) : <p style={{color: 'black'}}>Not logged in.</p>}
                 </div>

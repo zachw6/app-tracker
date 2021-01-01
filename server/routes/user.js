@@ -96,7 +96,7 @@ router.post("/updateApplication", (req, res) => {
                     "applications.$.interviewTime": appData.interviewTime,
                     "applications.$.followUp": appData.followUp,
                     "applications.$.documentsSubmitted": appData.documentsSubmitted,
-                    "applications.$.notes": appData.documentsSubmitted
+                    "applications.$.notes": appData.notes
                 }}, { new: true },
             function (err) {
               if (err) {

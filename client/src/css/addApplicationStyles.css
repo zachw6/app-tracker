@@ -201,6 +201,8 @@ h3.addApplicationTitle {
   background-color: transparent;
   font-size: 18px;
   color: #e33b32;
+  outline: none;
+  border: none;
 }
 
 /* Changing scrollbar in Chrome */

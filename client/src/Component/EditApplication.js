@@ -25,7 +25,7 @@ export default function EditApplication(props) {
         setDocumentsSubmitted(documentsSubmittedCopy);
         setNotes(notesCopy);
         checkInterviewScheduled();
-    }, [])
+    }, [props.documentsSubmitted, props.notes])
 
     const addSubmittedDocument = () => {
         let documentsSubmittedCopy = [...documentsSubmitted];

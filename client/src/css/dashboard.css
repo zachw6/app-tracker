@@ -23,6 +23,7 @@ input {
 }
 
 .dashboardFilter {
+  box-sizing: border-box;
   padding-top: 20px;
   padding-left: 2vw;
   background-color: #f0f0f0;
@@ -188,6 +189,10 @@ button.btn_editMode {
   color: #101010;
 }
 
+.applicationBody li {
+  margin-left: 2em;
+}
+
 .applicationFooter {
   border: none;
   padding: 0.3em 0;
@@ -220,6 +225,7 @@ button.btn_editMode {
 
   .dashboard button.showFilters {
     display: block;
+    cursor: pointer;
     z-index: 2;
     grid-row-start: 2;
     grid-row-end: 3;
