@@ -28,6 +28,7 @@ export default function Login(props) {
 
     return (
         <div>
+            Login with Google
             <GoogleLogin 
                 clientId={clientId}
                 buttonText="Login with Google"
