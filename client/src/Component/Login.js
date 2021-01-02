@@ -9,7 +9,7 @@ export default function Login(props) {
     const onSuccess = (res) => {
         axios({
             method: "POST",
-            url: "http://localhost:5000/login/googlelogin",
+            url: "https://www.apptracker.app/login/googlelogin",
             data: {tokenId: res.tokenId}
         }).then(res => {
             if(sessionStorage.getItem('loginToken') == null){

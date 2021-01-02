@@ -1,5 +1,5 @@
 import React from 'react'
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import '../css/dashboard.css'
 
 const moment = require('moment');
@@ -21,7 +21,7 @@ export default function Application(props) {
             <div><span style={{fontWeight: 'bold'}}>Interviewer: </span> {props.interviewer}</div>
             <div><span style={{fontWeight: 'bold'}}>Follow-Up: </span> {props.followUp ? "True" : "False"}</div>
             <div><span style={{fontWeight: 'bold'}}>Documents Submitted: </span> {props.documentsSubmitted.map( (doc) => { return <li key={doc}>{doc}</li> })}</div>
-            <div><span style={{fontWeight: 'bold'}}>Additional Notes: </span> {props.additionalNotes}</div>
+            <div><span style={{fontWeight: 'bold'}}>Additional Notes: </span> {props.notes.map ( (note) => { return <li key={note}>{note}</li>})}</div>
         </div>
         <button onClick={toggleDropDown} className="applicationFooter">LESS DETAILS</button>
     </div>)

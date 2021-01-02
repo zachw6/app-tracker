@@ -29,7 +29,7 @@ function App() {
 
     axios({
       method: "POST",
-      url: "http://localhost:5000/user/verify",
+      url: "https://www.apptracker.app/user/verify",
       data: {token: sessionStorage.getItem('loginToken')}
   }).then(res => {
       if(res.data.access === 'granted'){
@@ -48,7 +48,7 @@ function App() {
     if(sessionStorage.getItem('loginToken') != null){
     axios({
       method: "POST",
-      url: "http://localhost:5000/user/verify",
+      url: "https://www.apptracker.app/user/verify",
       data: {token: sessionStorage.getItem('loginToken')}
   }).then(res => {
       if(res.data.access === 'granted'){
