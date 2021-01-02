@@ -346,7 +346,7 @@ useEffect(updateFilters, [filterText, filters, applications]);
                                                                                                                 followUp={application.followUp} 
                                                                                                                 documentsSubmitted={application.documentsSubmitted} 
                                                                                                                 notes={application.notes} 
-                                                                                                                interviewTime={new Date()}/>
+                                                                                                                interviewTime={application.interviewTime}/>
                                             </div>
                                 else
                                     return <div key={application._id} style={{marginTop:'30px'}}>
