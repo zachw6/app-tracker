@@ -23,6 +23,10 @@ const applicationSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
+      location: {
+        type: String,
+        required: false,
+      },
       interviewer: {
         type: String,
         required: false,

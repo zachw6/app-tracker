@@ -89,6 +89,7 @@ export default function EditApplication(props) {
             appliedDate: appliedDate,
             status: document.getElementById('status').value,
             interviewTime: interviewTime,
+            location: document.getElementById('location').value,
             interviewer: document.getElementById('interviewer').value,
             followUp: document.getElementById('followUp').value,
             documentsSubmitted: documentsSubmitted,
@@ -97,7 +98,17 @@ export default function EditApplication(props) {
         }
       }).then(res => {
           if(res.data.access !== "denied"){
-            props.updateEditedApplication(props.applicationId, appliedDate, document.getElementById('companyName').value, document.getElementById('position').value, document.getElementById('interviewer').value, document.getElementById('status').value, interviewTime, document.getElementById('followUp').value, documentsSubmitted, notes);
+            props.updateEditedApplication(props.applicationId, 
+                appliedDate, 
+                document.getElementById('companyName').value, 
+                document.getElementById('position').value, 
+                document.getElementById('location').value, 
+                document.getElementById('interviewer').value, 
+                document.getElementById('status').value, 
+                interviewTime, 
+                document.getElementById('followUp').value, 
+                documentsSubmitted, 
+                notes);
             props.toggleEditing();
         }
           
@@ -130,8 +141,9 @@ export default function EditApplication(props) {
                                 <div className="interviewSchedule">
                                     <h3 className="addApplicationTitle">Interview Date/Time</h3>
                                     <div style={{width: '100%'}}><DatePicker selected={interviewTime} onChange={date => setInterviewTime(date)} showTimeSelect dateFormat="Pp" timeFormat="p" /></div></div>
-                                <h3 className="addApplicationTitle">Interviewer: </h3><input type="text" name="interviewer" id="interviewer" defaultValue={props.interviewer}></input>
-                                <h3 className="addApplicationTitle">Follow-Up: </h3>
+                                    <h3 className="addApplicationTitle">Location </h3><input type="text" name="location" id="location" defaultValue={props.location}></input>
+                                <h3 className="addApplicationTitle">Interviewer </h3><input type="text" name="interviewer" id="interviewer" defaultValue={props.interviewer}></input>
+                                <h3 className="addApplicationTitle">Follow-Up </h3>
                                 <div className="addApplicationSelect"><select required name="followUp" id="followUp" defaultValue={props.followUp}>
                                     <option value="false">Incomplete</option>
                                     <option value="true">Complete</option>
@@ -141,7 +153,7 @@ export default function EditApplication(props) {
 
                             {/* Left side of form */ }
                             <div className="rightSideForm">
-                                <h3 className="addApplicationTitle">Documents Submitted: </h3>
+                                <h3 className="addApplicationTitle">Documents Submitted </h3>
                                 <div className="addApplicationSelect"><select required name="submittedDocument" id="submittedDocument">
                                     <option value="Resume">Resume</option>
                                     <option value="Cover Letter">Cover Letter</option>
@@ -153,7 +165,7 @@ export default function EditApplication(props) {
                                 </select> </div>
                                 <button type="button" className="blueButton" onClick={addSubmittedDocument}>Add Document</button> <br />
                                 
-                                <h3 className="addApplicationTitle">Notes: </h3><textarea type="text" name="note" id="note"></textarea><br />
+                                <h3 className="addApplicationTitle">Notes </h3><textarea type="text" name="note" id="note"></textarea><br />
                                 <button type="button" className="blueButton" onClick= { addNote } >Add Note</button>
 
                                 <div className="notesDocsContainer">

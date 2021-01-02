@@ -201,12 +201,13 @@ const toggleEditingApplication = () => {
     setIsUpdatingApplication(!isUpdatingApplication);
 }
 
-const startUpdatingApplication = (e, applicationId, appliedDate, companyName, position, interviewer, status, interviewTime, followUp, documentsSubmitted, notes) => {
+const startUpdatingApplication = (e, applicationId, appliedDate, companyName, position, location, interviewer, status, interviewTime, followUp, documentsSubmitted, notes) => {
     setUpdateApplicationDetails({
         applicationId,
         appliedDate,
         companyName,
         position,
+        location,
         interviewer,
         status,
         interviewTime,
@@ -239,13 +240,14 @@ const showFilters = () => {
     }
 }
 
-const updateEditedApplications = (applicationId, appliedDate, companyName, position, interviewer, status, interviewTime, followUp, documentsSubmitted, notes) => {
+const updateEditedApplications = (applicationId, appliedDate, companyName, position, location, interviewer, status, interviewTime, followUp, documentsSubmitted, notes) => {
     let applicationsCopy = [...applications];
     for(let i = 0; i < applicationsCopy.length; i++){
         if(applicationsCopy[i]._id === applicationId){
             applicationsCopy[i].appliedDate = appliedDate;
             applicationsCopy[i].companyName = companyName;
             applicationsCopy[i].position = position;
+            applicationsCopy[i].location = location;
             applicationsCopy[i].interviewer = interviewer;
             applicationsCopy[i].status = status;
             applicationsCopy[i].interviewTime = interviewTime;
@@ -264,8 +266,25 @@ useEffect(updateFilters, [filterText, filters, applications]);
 
     return (
         <div className="dashboard">
-        {isAddingApplication ? <AddApplication getApplications={getApplications} toggleAdding={toggleAddingApplication} /> : null}
-        {isUpdatingApplication ? <EditApplication applicationId={ updateApplicationDetails.applicationId } getApplications={getApplications} toggleEditing={toggleEditingApplication} appliedDate={updateApplicationDetails.appliedDate} companyName={updateApplicationDetails.companyName} position={updateApplicationDetails.position} interviewer={updateApplicationDetails.interviewer} status={updateApplicationDetails.status} interviewTime={updateApplicationDetails.interviewTime} followUp={updateApplicationDetails.followUp} documentsSubmitted={updateApplicationDetails.documentsSubmitted} notes={updateApplicationDetails.notes} updateEditedApplication={updateEditedApplications}/> : null}
+        {isAddingApplication ? 
+        <AddApplication 
+        getApplications={getApplications} toggleAdding={toggleAddingApplication} /> : null}
+        {isUpdatingApplication ? 
+        <EditApplication 
+        applicationId={ updateApplicationDetails.applicationId } 
+        getApplications={getApplications} 
+        toggleEditing={toggleEditingApplication} 
+        appliedDate={updateApplicationDetails.appliedDate} 
+        companyName={updateApplicationDetails.companyName} 
+        position={updateApplicationDetails.position} 
+        location={updateApplicationDetails.location}
+        interviewer={updateApplicationDetails.interviewer} 
+        status={updateApplicationDetails.status} 
+        interviewTime={updateApplicationDetails.interviewTime} 
+        followUp={updateApplicationDetails.followUp} 
+        documentsSubmitted={updateApplicationDetails.documentsSubmitted} 
+        notes={updateApplicationDetails.notes} 
+        updateEditedApplication={updateEditedApplications}/> : null}
             <div className="dashboardBody">
             <header >
                 <h1 className="title">AppTracker</h1><h5 onClick={props.logout} ><Link to="/">Logout</Link></h5>

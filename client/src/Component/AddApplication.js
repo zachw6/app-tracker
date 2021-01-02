@@ -74,6 +74,7 @@ export default function AddApplication(props) {
             appliedDate: appliedDate,
             status: document.getElementById('status').value,
             interviewTime: interviewTime,
+            location: document.getElementById('location').value,
             interviewer: document.getElementById('interviewer').value,
             followUp: document.getElementById('followUp').value,
             documentsSubmitted: documentsSubmitted,
@@ -114,6 +115,7 @@ export default function AddApplication(props) {
                                 <div className="interviewSchedule">
                                     <h3 className="addApplicationTitle">Interview Date/Time</h3>
                                     <div style={{width: '100%'}}><DatePicker selected={interviewTime} onChange={date => setInterviewTime(date)} showTimeSelect dateFormat="Pp" timeFormat="p" /></div></div>
+                                <h3 className="addApplicationTitle">Location: </h3><input type="text" name="location" id="location"></input>
                                 <h3 className="addApplicationTitle">Interviewer: </h3><input type="text" name="interviewer" id="interviewer"></input>
                                 <h3 className="addApplicationTitle">Follow-Up: </h3>
                                 <div className="addApplicationSelect"><select required name="followUp" id="followUp">
