@@ -12,6 +12,7 @@ export default function EditApplication(props) {
 
     const [appliedDate, setAppliedDate] = useState(moment(props.appliedDate).toDate());
     const [interviewTime, setInterviewTime] = useState(moment(props.interviewTime).toDate());
+
     const [documentsSubmitted, setDocumentsSubmitted] = useState([]);
     const [notes, setNotes] = useState([]);
 
