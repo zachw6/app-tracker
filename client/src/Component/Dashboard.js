@@ -340,6 +340,7 @@ useEffect(updateFilters, [filterText, filters, applications]);
                                     return <div key={application._id} style={{marginTop:'30px'}}><Application   companyName={application.companyName}
                                                                                                                 appliedDate={application.appliedDate} 
                                                                                                                 position={application.position} 
+                                                                                                                location={application.location}
                                                                                                                 interviewer={application.interviewer} 
                                                                                                                 status={application.status} 
                                                                                                                 followUp={application.followUp} 
