@@ -115,9 +115,9 @@ export default function AddApplication(props) {
                                 <div className="interviewSchedule">
                                     <h3 className="addApplicationTitle">Interview Date/Time</h3>
                                     <div style={{width: '100%'}}><DatePicker selected={interviewTime} onChange={date => setInterviewTime(date)} showTimeSelect dateFormat="Pp" timeFormat="p" /></div></div>
-                                <h3 className="addApplicationTitle">Location: </h3><input type="text" name="location" id="location"></input>
-                                <h3 className="addApplicationTitle">Interviewer: </h3><input type="text" name="interviewer" id="interviewer"></input>
-                                <h3 className="addApplicationTitle">Follow-Up: </h3>
+                                <h3 className="addApplicationTitle">Location </h3><input type="text" name="location" id="location"></input>
+                                <h3 className="addApplicationTitle">Interviewer </h3><input type="text" name="interviewer" id="interviewer"></input>
+                                <h3 className="addApplicationTitle">Follow-Up </h3>
                                 <div className="addApplicationSelect"><select required name="followUp" id="followUp">
                                     <option value="false">Incomplete</option>
                                     <option value="true">Complete</option>
@@ -127,7 +127,7 @@ export default function AddApplication(props) {
 
                             {/* Left side of form */ }
                             <div className="rightSideForm">
-                                <h3 className="addApplicationTitle">Documents Submitted: </h3>
+                                <h3 className="addApplicationTitle">Documents Submitted </h3>
                                 <div className="addApplicationSelect"><select required name="submittedDocument" id="submittedDocument">
                                     <option value="Resume">Resume</option>
                                     <option value="Cover Letter">Cover Letter</option>
@@ -139,8 +139,11 @@ export default function AddApplication(props) {
                                 </select> </div>
                                 <button type="button" className="blueButton" onClick={addSubmittedDocument}>Add Document</button> <br />
                                 
-                                <h3 className="addApplicationTitle">Notes: </h3><textarea type="text" name="note" id="note"></textarea><br />
-                                <button type="button" className="blueButton" onClick= { addNote } >Add Note</button>
+                                <h3 className="addApplicationTitle">Notes </h3><textarea type="text" name="note" id="note"></textarea><br />
+                                <button type="button" className="blueButton" onClick= { () => { 
+                                    addNote(); 
+                                    document.getElementById('note').value = ""; 
+                                    } }  >Add Note</button>
 
                                 <div className="notesDocsContainer">
                                     {documentsSubmitted.length > 0 ? <h4>Submitted Documents</h4> : null }

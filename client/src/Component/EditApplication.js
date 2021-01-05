@@ -167,7 +167,10 @@ export default function EditApplication(props) {
                                 <button type="button" className="blueButton" onClick={addSubmittedDocument}>Add Document</button> <br />
                                 
                                 <h3 className="addApplicationTitle">Notes </h3><textarea type="text" name="note" id="note"></textarea><br />
-                                <button type="button" className="blueButton" onClick= { addNote } >Add Note</button>
+                                <button type="button" className="blueButton" onClick= { () => { 
+                                    addNote(); 
+                                    document.getElementById('note').value = ""; 
+                                    } } >Add Note</button>
 
                                 <div className="notesDocsContainer">
                                     {documentsSubmitted.length > 0 ? <h4>Submitted Documents</h4> : null }

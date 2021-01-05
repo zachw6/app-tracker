@@ -24,7 +24,7 @@
     "runDev": "nodemon server.js",
     "start": "node server/server.js",
     "install-client": "npm install",
-    "heroku-postbuild": "npm run install-client && npm run build"
+    "heroku-postbuild": "npm run install-client && cd ../client && npm run build"
   },
   "author": "Zachary Williams",
   "license": "ISC"
