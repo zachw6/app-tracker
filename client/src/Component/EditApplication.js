@@ -12,9 +12,9 @@ export default function EditApplication(props) {
 
     const [appliedDate, setAppliedDate] = useState(moment(props.appliedDate).toDate());
     const [interviewTime, setInterviewTime] = useState(moment(props.interviewTime).toDate());
-
     const [documentsSubmitted, setDocumentsSubmitted] = useState([]);
     const [notes, setNotes] = useState([]);
+    const [documentSelector, setDocumentSelector] = useState("Resume");
 
     useEffect( () => {
         let documentsSubmittedCopy = [];
@@ -30,6 +30,14 @@ export default function EditApplication(props) {
 
     const addSubmittedDocument = () => {
         let documentsSubmittedCopy = [...documentsSubmitted];
+        if(documentSelector === "Other" && !documentsSubmittedCopy.includes(document.getElementById("otherDocument").value)){
+            documentsSubmittedCopy.push(document.getElementById("otherDocument").value)
+            setDocumentsSubmitted(documentsSubmittedCopy);
+            return;
+        }
+        if(documentSelector === "Other" && documentsSubmittedCopy.includes(document.getElementById("otherDocument").value)){
+            return;
+        }
         if(!documentsSubmittedCopy.includes(document.getElementById('submittedDocument').value)){
             documentsSubmittedCopy.push(document.getElementById('submittedDocument').value);
             setDocumentsSubmitted(documentsSubmittedCopy);
@@ -52,6 +60,11 @@ export default function EditApplication(props) {
             document.getElementsByClassName('interviewSchedule')[0].style.display = "none";
             document.getElementsByClassName('notesDocsContainer')[0].style.height = "10.3em";
         }
+    }
+
+    const updateDocumentSelector = () => {
+        setDocumentSelector(document.getElementById("submittedDocument").value);
+        console.log(documentSelector);
     }
 
     const removeNoteElement = (e, note) => {
@@ -155,7 +168,7 @@ export default function EditApplication(props) {
                             {/* Left side of form */ }
                             <div className="rightSideForm">
                                 <h3 className="addApplicationTitle">Documents Submitted </h3>
-                                <div className="addApplicationSelect"><select required name="submittedDocument" id="submittedDocument">
+                                <div className="addApplicationSelect"><select required name="submittedDocument" id="submittedDocument" onChange={updateDocumentSelector}>
                                     <option value="Resume">Resume</option>
                                     <option value="Cover Letter">Cover Letter</option>
                                     <option value="Transcript">Transcript</option>
@@ -164,6 +177,9 @@ export default function EditApplication(props) {
                                     <option value="References List">References List</option>
                                     <option value="Other">Other</option>
                                 </select> </div>
+                                {documentSelector === "Other" ? 
+                                    <div style={{margin: "0.5em 0 0 0"}}><input type="text" name="otherDocument" id="otherDocument" placeholder="Other Document Title"></input></div>
+                                : null}
                                 <button type="button" className="blueButton" onClick={addSubmittedDocument}>Add Document</button> <br />
                                 
                                 <h3 className="addApplicationTitle">Notes </h3><textarea type="text" name="note" id="note"></textarea><br />
