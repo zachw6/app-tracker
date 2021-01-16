@@ -66,7 +66,7 @@ export default function AddApplication(props) {
         axios({
           method: "POST",
           url: "https://www.apptracker.app/user/createApplication",
-          data: {token: sessionStorage.getItem('loginToken'), 
+          data: {token: localStorage.getItem('loginToken'), 
           appData: 
             {
             companyName: document.getElementById('companyName').value,

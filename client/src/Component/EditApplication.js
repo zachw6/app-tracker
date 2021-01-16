@@ -81,7 +81,7 @@ export default function EditApplication(props) {
         axios({
           method: "POST",
           url: "https://www.apptracker.app/user/updateApplication",
-          data: {token: sessionStorage.getItem('loginToken'), 
+          data: {token: localStorage.getItem('loginToken'), 
           appData: 
             {
             _id: props.applicationId,

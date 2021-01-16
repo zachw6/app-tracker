@@ -17,12 +17,12 @@ function App() {
   }
 
   const logOut = () => {
-    sessionStorage.removeItem("loginToken");
+    localStorage.removeItem("loginToken");
     setLogin(false);
 }
 
   useEffect(() => {
-    if(sessionStorage.getItem('loginToken') == null){
+    if(localStorage.getItem('loginToken') == null){
       setLogin(false);
       document.title = "Apptracker | Login";
   } else {
@@ -30,7 +30,7 @@ function App() {
     axios({
       method: "POST",
       url: "https://www.apptracker.app/user/verify",
-      data: {token: sessionStorage.getItem('loginToken')}
+      data: {token: localStorage.getItem('loginToken')}
   }).then(res => {
       if(res.data.access === 'granted'){
         setName(res.data.name);
@@ -45,11 +45,11 @@ function App() {
   }, [])
 
   useEffect( () => {
-    if(sessionStorage.getItem('loginToken') != null){
+    if(localStorage.getItem('loginToken') != null){
     axios({
       method: "POST",
       url: "https://www.apptracker.app/user/verify",
-      data: {token: sessionStorage.getItem('loginToken')}
+      data: {token: localStorage.getItem('loginToken')}
   }).then(res => {
       if(res.data.access === 'granted'){
         setName(res.data.name);

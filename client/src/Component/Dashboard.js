@@ -148,7 +148,7 @@ export default function Dashboard(props) {
         axios({
           method: "POST",
           url: "https://www.apptracker.app/user/applications",
-          data: {token: sessionStorage.getItem('loginToken')}
+          data: {token: localStorage.getItem('loginToken')}
       }).then(res => {
         setApplications([]);
         let newApplications = [...applications];
@@ -168,7 +168,7 @@ const removeApplication = (e, id) => {
         method: "POST",
         url: "https://www.apptracker.app/user/applications/remove",
         data: {
-            token: sessionStorage.getItem('loginToken'),
+            token: localStorage.getItem('loginToken'),
             removeId: id
             }
     }).then(res => {

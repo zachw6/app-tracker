@@ -12,11 +12,11 @@ export default function Login(props) {
             url: "https://www.apptracker.app/login/googlelogin",
             data: {tokenId: res.tokenId}
         }).then(res => {
-            if(sessionStorage.getItem('loginToken') == null){
-                sessionStorage.setItem('loginToken', res.data.token);
+            if(localStorage.getItem('loginToken') == null){
+                localStorage.setItem('loginToken', res.data.token);
             } else {
-                sessionStorage.removeItem('loginToken');
-                sessionStorage.setItem('loginToken', res.data.token);
+                localStorage.removeItem('loginToken');
+                localStorage.setItem('loginToken', res.data.token);
             }
             props.loginFunc(1);
         });
