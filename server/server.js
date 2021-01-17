@@ -7,11 +7,7 @@ const userRouter = require("./routes/user");
 const path = require("path");
 const compression = require("compression");
 const morgan = require("morgan");
-<<<<<<< HEAD
 // var sslRedirect = require("heroku-ssl-redirect");
-=======
-var sslRedirect = require("heroku-ssl-redirect");
->>>>>>> parent of 8fff801... Removed Heroku SSL Redirect due to issues with the package.
 
 require('dotenv').config();
 
@@ -19,11 +15,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
-<<<<<<< HEAD
 // app.use(sslRedirect());
-=======
-app.use(sslRedirect());
->>>>>>> parent of 8fff801... Removed Heroku SSL Redirect due to issues with the package.
 
 // Establish the MongoDB Connection
 mongoose.connect(process.env.DATABASE_URI, {
