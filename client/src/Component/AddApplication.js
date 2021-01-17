@@ -99,7 +99,6 @@ export default function AddApplication(props) {
         // Search each object in the array for the email.
         contactsCopy.splice(index, 1);
         setContacts(contactsCopy);
-        return;
     }
 
     const createApplication = (event) => {

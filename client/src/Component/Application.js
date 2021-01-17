@@ -19,7 +19,7 @@ export default function Application(props) {
         <div className="applicationBody">
             <div><span style={{fontWeight: 'bold'}}>Status: </span> {props.status} {props.status === "Interview Scheduled" ? "(" + moment(props.interviewTime).format('MM/DD/YYYY h:mm A') + ")" : null}</div>
             { props.location !== "" ? <div><span style={{fontWeight: 'bold'}}>Location: </span> {props.location}</div> : null }
-            { props.contacts.length !== 0 ? <div><span style={{fontWeight: 'bold'}}>Contacts: </span> {props.contacts}</div> : null }
+            { props.contacts.length !== 0 ? <div><span style={{fontWeight: 'bold'}}>Contacts: </span> {props.contacts.map((contact, index) => { return <li key={contact.contactName + index}>{contact.contactName + ": " + contact.contactRole + (contact.contactEmail !== "" ? " (" + contact.contactEmail + ")" : "") }</li>} )}</div> : null }
             <div><span style={{fontWeight: 'bold'}}>Follow-Up: </span> {props.followUp ? "True" : "False"}</div>
             { props.documentsSubmitted.length !== 0 ? <div><span style={{fontWeight: 'bold'}}>Documents Submitted: </span> {props.documentsSubmitted.map( (doc) => { return <li key={doc}>{doc}</li> })}</div> : null }
             { props.notes.length !== 0 ? <div><span style={{fontWeight: 'bold'}}>Additional Notes: </span> {props.notes.map ( (note) => { return <li key={note}>{note}</li>})}</div> : null }
