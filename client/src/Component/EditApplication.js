@@ -14,19 +14,25 @@ export default function EditApplication(props) {
     const [interviewTime, setInterviewTime] = useState(moment(props.interviewTime).toDate());
     const [documentsSubmitted, setDocumentsSubmitted] = useState([]);
     const [notes, setNotes] = useState([]);
+    const [contacts, setContacts] = useState([]);
     const [documentSelector, setDocumentSelector] = useState("Resume");
 
+    // Load in the notes, documents, and contacts into their respective arrays.
     useEffect( () => {
         let documentsSubmittedCopy = [];
         let notesCopy = [];
+        let contactsCopy = [];
         for(let i = 0; i < props.documentsSubmitted.length; i++)
             documentsSubmittedCopy.push(props.documentsSubmitted[i]);
         for(let i = 0; i < props.notes.length; i++)
             notesCopy.push(props.notes[i]);
+        for(let i = 0; i < props.contacts.length; i++)
+            contactsCopy.push(props.contacts[i]);
         setDocumentsSubmitted(documentsSubmittedCopy);
         setNotes(notesCopy);
+        setContacts(contactsCopy)
         checkInterviewScheduled();
-    }, [props.documentsSubmitted, props.notes])
+    }, [props.documentsSubmitted, props.notes, props.contacts])
 
     const addSubmittedDocument = () => {
         let documentsSubmittedCopy = [...documentsSubmitted];
@@ -187,7 +193,6 @@ export default function EditApplication(props) {
                                     addNote(); 
                                     document.getElementById('note').value = ""; 
                                     } } >Add Note</button>
-
                                 <div className="notesDocsContainer">
                                     {documentsSubmitted.length > 0 ? <h4>Submitted Documents</h4> : null }
                                     { documentsSubmitted.map((doc, index) => {

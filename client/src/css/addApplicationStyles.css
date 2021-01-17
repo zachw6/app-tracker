@@ -14,7 +14,7 @@
 .addApplicationContainer {
   position: relative;
   width: 60%;
-  height: 70%;
+  height: 75%;
   background-color: #f0f0f0;
 }
 
@@ -248,13 +248,11 @@ h3.addApplicationTitle {
 }
 
 @media only screen and (max-width: 875px) {
-
-.addApplicationContainer {
-  width: 100%;
-  height: 100%;
+  .addApplicationContainer {
+    width: 100%;
+    height: 100%;
+  }
 }
-}
-
 
 @media only screen and (max-width: 535px) {
   .addApplication .formContainer {
@@ -269,28 +267,24 @@ h3.addApplicationTitle {
     scrollbar-width: thin;
   }
 
-
   .addApplication .leftSideForm,
   .addApplication .rightSideForm {
     margin: 0 1.5em;
   }
 
+  .addApplication .notesDocsContainer,
+  .addApplicationSelect select,
+  .addApplication input,
+  .addApplication textarea,
+  .react-datepicker-ignore-onclickoutside {
+    width: 100% !important;
+  }
 
-.addApplication .notesDocsContainer,
-.addApplicationSelect select,
-.addApplication input,
-.addApplication textarea,
-.react-datepicker-ignore-onclickoutside {
-  width: 100% !important;
-}
+  .addApplication .notesDocsContainer {
+    margin-bottom: 60px;
+  }
 
-.addApplication .notesDocsContainer {
-  margin-bottom: 60px;
-}
-
-
-.addApplication input[type="submit"] {
-  position: absolute;
-}
-
+  .addApplication input[type="submit"] {
+    position: absolute;
+  }
 }

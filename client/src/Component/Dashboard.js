@@ -201,14 +201,14 @@ const toggleEditingApplication = () => {
     setIsUpdatingApplication(!isUpdatingApplication);
 }
 
-const startUpdatingApplication = (e, applicationId, appliedDate, companyName, position, location, interviewer, status, interviewTime, followUp, documentsSubmitted, notes) => {
+const startUpdatingApplication = (e, applicationId, appliedDate, companyName, position, location, contacts, status, interviewTime, followUp, documentsSubmitted, notes) => {
     setUpdateApplicationDetails({
         applicationId,
         appliedDate,
         companyName,
         position,
         location,
-        interviewer,
+        contacts,
         status,
         interviewTime,
         followUp,
@@ -246,7 +246,7 @@ const updateEditedApplications =
     companyName, 
     position, 
     location, 
-    interviewer,
+    contacts,
     status, 
     interviewTime, 
     followUp, 
@@ -259,7 +259,7 @@ const updateEditedApplications =
             applicationsCopy[i].companyName = companyName;
             applicationsCopy[i].position = position;
             applicationsCopy[i].location = location;
-            applicationsCopy[i].interviewer = interviewer;
+            applicationsCopy[i].contacts = contacts;
             applicationsCopy[i].status = status;
             applicationsCopy[i].interviewTime = interviewTime;
             applicationsCopy[i].followUp = followUp;
@@ -289,7 +289,7 @@ useEffect(updateFilters, [filterText, filters, applications]);
         companyName={updateApplicationDetails.companyName} 
         position={updateApplicationDetails.position} 
         location={updateApplicationDetails.location}
-        interviewer={updateApplicationDetails.interviewer} 
+        contacts={updateApplicationDetails.contacts} 
         status={updateApplicationDetails.status} 
         interviewTime={updateApplicationDetails.interviewTime} 
         followUp={updateApplicationDetails.followUp} 
@@ -341,7 +341,7 @@ useEffect(updateFilters, [filterText, filters, applications]);
                                                                                                                 appliedDate={application.appliedDate} 
                                                                                                                 position={application.position} 
                                                                                                                 location={application.location}
-                                                                                                                interviewer={application.interviewer} 
+                                                                                                                contacts={application.contacts} 
                                                                                                                 status={application.status} 
                                                                                                                 followUp={application.followUp} 
                                                                                                                 documentsSubmitted={application.documentsSubmitted} 
@@ -351,7 +351,7 @@ useEffect(updateFilters, [filterText, filters, applications]);
                                 else
                                     return <div key={application._id} style={{marginTop:'30px'}}>
                                                 <div className="editModeButtons">
-                                                    <button onClick={(e) => { startUpdatingApplication(e, application._id, application.appliedDate, application.companyName, application.position, application.location, application.interviewer, application.status, application.interviewTime, application.followUp, application.documentsSubmitted, application.notes) }}>
+                                                    <button onClick={(e) => { startUpdatingApplication(e, application._id, application.appliedDate, application.companyName, application.position, application.location, application.contacts, application.status, application.interviewTime, application.followUp, application.documentsSubmitted, application.notes) }}>
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                                                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
                                                         </svg>
@@ -368,7 +368,7 @@ useEffect(updateFilters, [filterText, filters, applications]);
                                                                 appliedDate={application.appliedDate}
                                                                 position={application.position}
                                                                 location={application.location}
-                                                                interviewer={application.interviewer}
+                                                                contacts={application.contacts}
                                                                 status={application.status}
                                                                 followUp={application.followUp}
                                                                 documentsSubmitted={application.documentsSubmitted}

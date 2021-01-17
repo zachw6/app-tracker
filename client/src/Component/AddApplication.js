@@ -12,6 +12,7 @@ export default function AddApplication(props) {
     const [interviewTime, setInterviewTime] = useState(new Date());
     const [documentsSubmitted, setDocumentsSubmitted] = useState([]);
     const [notes, setNotes] = useState([]);
+    const [contacts, setContacts] = useState([]);
     const [documentSelector, setDocumentSelector] = useState("Resume");
 
     const addSubmittedDocument = () => {
@@ -38,6 +39,25 @@ export default function AddApplication(props) {
         }
     }
 
+    const addContact = () => {
+        // Disallow adding a contact without a company or email.
+        if(document.getElementById('contactName').value === "" || document.getElementById('contactRole').value === ""){
+            alert("Your contact must have a name and a role to be created.");
+            return;
+        }
+        let contactsCopy = [...contacts];
+        contactsCopy.push({
+            contactName: document.getElementById('contactName').value,
+            contactRole: document.getElementById('contactRole').value,
+            contactEmail: document.getElementById('contactEmail').value
+        });
+        setContacts(contactsCopy);
+        document.getElementById('contactName').value = "";
+        document.getElementById('contactRole').value = "";
+        document.getElementById('contactEmail').value = "";
+        
+    }
+
     const checkInterviewScheduled = () => {
         if(document.getElementById('status').value === "Interview Scheduled"){
             document.getElementsByClassName('interviewSchedule')[0].style.display = "block";
@@ -50,7 +70,6 @@ export default function AddApplication(props) {
 
     const updateDocumentSelector = () => {
         setDocumentSelector(document.getElementById("submittedDocument").value);
-        console.log(documentSelector);
     }
 
     const removeNoteElement = (e, note) => {
@@ -75,6 +94,14 @@ export default function AddApplication(props) {
         }
     }
 
+    const removeContactElement = (e, index) => {
+        let contactsCopy = [...contacts];
+        // Search each object in the array for the email.
+        contactsCopy.splice(index, 1);
+        setContacts(contactsCopy);
+        return;
+    }
+
     const createApplication = (event) => {
         event.preventDefault();
         axios({
@@ -89,7 +116,7 @@ export default function AddApplication(props) {
             status: document.getElementById('status').value,
             interviewTime: interviewTime,
             location: document.getElementById('location').value,
-            interviewer: document.getElementById('interviewer').value,
+            contacts: contacts,
             followUp: document.getElementById('followUp').value,
             documentsSubmitted: documentsSubmitted,
             notes: notes
@@ -130,7 +157,12 @@ export default function AddApplication(props) {
                                     <h3 className="addApplicationTitle">Interview Date/Time</h3>
                                     <div style={{width: '100%'}}><DatePicker selected={interviewTime} onChange={date => setInterviewTime(date)} showTimeSelect dateFormat="Pp" timeFormat="p" /></div></div>
                                 <h3 className="addApplicationTitle">Location </h3><input type="text" name="location" id="location"></input>
-                                <h3 className="addApplicationTitle">Interviewer </h3><input type="text" name="interviewer" id="interviewer"></input>
+                                <h3 className="addApplicationTitle">Contacts </h3>
+                                    <input type="text" name="contactName" id="contactName" placeholder="Contact's Name"></input>
+                                    <input style={{margin: "0.5em 0 0 0"}} type="text" name="contactRole" id="contactRole" placeholder="Contact's Role"></input>
+                                    <input style={{margin: "0.5em 0 0 0"}} type="text" name="contactEmail" id="contactEmail" placeholder="Contact's Email"></input>
+                                    <button type="button" className="blueButton" onClick={addContact}>Add Contact</button> <br />
+
                                 <h3 className="addApplicationTitle">Follow-Up </h3>
                                 <div className="addApplicationSelect"><select required name="followUp" id="followUp">
                                     <option value="false">Incomplete</option>
@@ -163,6 +195,11 @@ export default function AddApplication(props) {
                                     } }  >Add Note</button>
 
                                 <div className="notesDocsContainer">
+                                    
+                                    {contacts.length > 0 ? <h4>Contacts </h4> : null }
+                                    { contacts.map((contact, index) => {
+                                    return <div key = {"contact" + index}><li>{index + 1}) {contact.contactRole + ": " + contact.contactName + (contact.contactEmail !== "" ? " (" + contact.contactEmail + ")": "")} <button type="button" onClick={(e) => { removeContactElement(e, index) }}>&#10006;</button></li></div>
+                                }) }
                                     {documentsSubmitted.length > 0 ? <h4>Submitted Documents</h4> : null }
                                     { documentsSubmitted.map((doc, index) => {
                                     return <div key = {"doc" + index}><li>{index + 1}) {doc} <button type="button" onClick={(e) => { removeDocumentElement(e, doc) }}>&#10006;</button></li></div>

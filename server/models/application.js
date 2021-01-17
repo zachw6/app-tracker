@@ -27,9 +27,14 @@ const applicationSchema = new mongoose.Schema({
         type: String,
         required: false,
       },
-      interviewer: {
-        type: String,
-        required: false,
+      contacts: {
+        type: Array,
+        required: true,
+        contact: {
+          type: Object,
+          required: false,
+        },
+        default: [],
       },
       status: {
         type: String,
